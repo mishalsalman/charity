@@ -10,8 +10,8 @@
 <meta property="og:description" content="Clean water projects that change lives.">
 <meta property="og:type" content="website">
 
-<link rel="icon" href="assets/logo.png">
-<link rel="apple-touch-icon" href="assets/logo.png">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/icon.svg">
 <link rel="manifest" href="manifest.webmanifest">
 
 <script type="application/ld+json">
@@ -20,35 +20,35 @@
   "@type": "Organization",
   "name": "The Elite Global Humanity Foundation",
   "slogan": "Built on Trust",
-  "logo": "assets/logo.png"
+  "logo": "assets/icon.svg"
 }
 </script>
 
 <style>
 :root{
-  --primary: #2c7a7b;
-  --primary-2: #1f5e5f;
-  --accent: #38b2ac;
-  --accent-2: #63e6e2;
-  --bg: #f6fbfb;
+  --primary: #0ea5e9;      /* sky-500 */
+  --primary-2: #0284c7;    /* sky-600 */
+  --accent: #22c55e;       /* green-500 */
+  --accent-2: #16a34a;     /* green-600 */
+  --bg: #f7fbff;
   --surface: #ffffff;
-  --text: #0f172a;
+  --text: #0b1220;
   --muted: #475569;
   --border: rgba(15, 23, 42, 0.12);
-  --shadow: 0 16px 40px rgba(2, 8, 23, 0.14);
-  --ring: rgba(56, 178, 172, 0.35);
+  --shadow: 0 18px 50px rgba(2, 8, 23, 0.14);
+  --ring: rgba(14, 165, 233, 0.26);
   --radius: 16px;
   --radius-sm: 12px;
-  --max: 1100px;
+  --max: 1120px;
 }
 body.dark{
-  --bg:#0b1220;
-  --surface:#0f1a2e;
+  --bg:#070b16;
+  --surface:#0b1220;
   --text:#eef2ff;
   --muted:#b8c2d8;
   --border: rgba(226, 232, 240, 0.14);
-  --shadow: 0 18px 48px rgba(0,0,0,0.45);
-  --ring: rgba(99, 230, 226, 0.25);
+  --shadow: 0 22px 64px rgba(0,0,0,0.55);
+  --ring: rgba(34, 197, 94, 0.22);
 }
 
 *{ box-sizing:border-box; }
@@ -56,8 +56,8 @@ html{ scroll-behavior:smooth; }
 body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
-  background: radial-gradient(900px 520px at 10% 0%, rgba(56,178,172,0.14), transparent 55%),
-              radial-gradient(720px 480px at 90% 10%, rgba(44,122,123,0.16), transparent 60%),
+  background: radial-gradient(900px 520px at 10% 0%, rgba(14,165,233,0.16), transparent 55%),
+              radial-gradient(720px 480px at 90% 10%, rgba(34,197,94,0.14), transparent 60%),
               var(--bg);
   color:var(--text);
   transition: background 220ms ease, color 220ms ease;
@@ -88,7 +88,18 @@ header{
 .brand{
   display:flex; gap:12px; align-items:center; text-decoration:none;
 }
-.brand img{ width:44px; height:44px; border-radius:12px; }
+.brand-mark{
+  width:44px; height:44px;
+  border-radius:14px;
+  background: linear-gradient(135deg, var(--accent), var(--primary));
+  box-shadow: 0 12px 28px rgba(2,8,23,0.18);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-weight:1000;
+  letter-spacing:0.6px;
+}
 .brand .name{ line-height:1.1; }
 .brand .name strong{ display:block; font-size:15px; letter-spacing:0.2px; }
 .brand .name span{ display:block; font-size:12px; color:var(--muted); }
@@ -260,6 +271,12 @@ section{ padding:72px 0; }
   border-radius: var(--radius);
   padding:16px;
   box-shadow: 0 12px 24px rgba(2,8,23,0.08);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+.card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(2,8,23,0.12);
+  border-color: color-mix(in srgb, var(--primary) 24%, var(--border));
 }
 .card h3{ margin:0 0 6px; font-size:16px; letter-spacing:-0.01em; }
 .card p{ margin:0; color:var(--muted); font-size:14px; line-height:1.5; }
@@ -503,6 +520,13 @@ footer{
 .reveal{ opacity:0; transform: translateY(12px); transition: opacity 500ms ease, transform 500ms ease; }
 .reveal.show{ opacity:1; transform: translateY(0); }
 
+@media (prefers-reduced-motion: reduce){
+  *{ scroll-behavior:auto !important; }
+  .reveal{ transition:none; transform:none; opacity:1; }
+  .card{ transition:none; }
+  .progress > div{ transition:none; }
+}
+
 dialog{
   border:none;
   border-radius: var(--radius);
@@ -610,7 +634,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
 <header>
   <div class="container header-inner">
     <a class="brand" href="#top" aria-label="The Elite Global Humanity Foundation home">
-      <img src="assets/logo.png" alt="The Elite Global Humanity Foundation logo">
+      <div class="brand-mark" aria-hidden="true">EG</div>
       <div class="name">
         <strong>The Elite Global Humanity Foundation</strong>
         <span>Built on trust • Transparent global impact</span>
@@ -618,7 +642,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
     </a>
 
     <nav id="siteNav" aria-label="Primary navigation">
-      <a href="#about">About</a>
+    <a href="#about">About</a>
       <a href="#programs">Programs</a>
       <a href="#impact">Impact</a>
       <a href="#events">Events</a>
@@ -626,7 +650,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
       <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
       <a href="#admin" id="adminLink">Admin</a>
-    </nav>
+  </nav>
 
     <div class="toolbar">
       <button class="icon-btn mobile-toggle" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
@@ -684,7 +708,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
         </div>
       </aside>
     </div>
-  </section>
+</section>
 
   <section id="about" class="reveal">
     <div class="container">
@@ -708,7 +732,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
         </div>
       </div>
     </div>
-  </section>
+</section>
 
   <section id="programs" class="reveal">
     <div class="container">
@@ -732,7 +756,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
         </div>
       </div>
     </div>
-  </section>
+</section>
 
   <section id="impact" class="reveal">
     <div class="container">
@@ -786,15 +810,15 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
             </div>
             <div>
               <label for="donationAmount">Amount</label>
-              <select id="donationAmount" required>
+    <select id="donationAmount" required>
                 <option value="">Select</option>
-                <option value="100">₹100</option>
+      <option value="100">₹100</option>
                 <option value="250">₹250</option>
-                <option value="500">₹500</option>
-                <option value="1000">₹1000</option>
+      <option value="500">₹500</option>
+      <option value="1000">₹1000</option>
                 <option value="2000">₹2000</option>
                 <option value="custom">Custom amount</option>
-              </select>
+    </select>
             </div>
           </div>
           <div id="customAmountWrap" style="display:none;">
@@ -884,7 +908,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
             <button class="ghost-btn" type="button" id="viewReceipt">View receipt</button>
           </div>
           <p class="hint">Need help? Choose UPI or Card and complete payment.</p>
-        </form>
+  </form>
 
         <div class="card">
           <div class="row-between">
@@ -920,7 +944,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
         </div>
       </div>
     </div>
-  </section>
+</section>
 
   <section id="volunteer" class="reveal">
     <div class="container">
@@ -979,8 +1003,8 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
           </div>
         </div>
       </div>
-    </div>
-  </section>
+  </div>
+</section>
 
   <section id="events" class="reveal">
     <div class="container">
@@ -1119,7 +1143,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
         <button class="ghost-btn danger" type="button" id="resetBtn">Reset data</button>
       </div>
 
-      <div id="adminPanel">
+  <div id="adminPanel">
         <div class="split" style="margin-top:12px;">
           <div class="card">
             <div class="row-between">
@@ -1138,10 +1162,10 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
           </div>
         </div>
       </div>
-    </div>
-  </section>
+  </div>
+</section>
 
-  <footer>
+<footer>
     <div class="container footer-grid">
       <div>
         <strong>The Elite Global Humanity Foundation</strong>
@@ -1158,7 +1182,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
         <a href="#contact">Contact</a>
       </div>
     </div>
-  </footer>
+</footer>
 </main>
 
 <button class="backtop" id="backTop" type="button" aria-label="Back to top">↑</button>
@@ -1611,7 +1635,7 @@ function setupDonate(){
   });
 
   form.addEventListener("submit", (e) => {
-    e.preventDefault();
+  e.preventDefault();
     const name = $("#donorName").value.trim();
     const email = $("#donorEmail").value.trim();
     const selected = amountSel.value;
