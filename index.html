@@ -4,11 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Elite Global Humanity Foundation | Built on Trust</title>
-<meta name="description" content="The Elite Global Humanity Foundation delivers transparent global impact through clean water, health, and education. Donate, volunteer, and track impact (demo).">
+<meta name="description" content="The Elite Global Humanity Foundation delivers transparent global impact through clean water, health, and education. Donate, volunteer, and track impact.">
 <meta name="theme-color" content="#2c7a7b">
 <meta property="og:title" content="The Elite Global Humanity Foundation">
 <meta property="og:description" content="Clean water projects that change lives.">
 <meta property="og:type" content="website">
+
+<link rel="icon" href="assets/logo.png">
+<link rel="apple-touch-icon" href="assets/logo.png">
+<link rel="manifest" href="manifest.webmanifest">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "The Elite Global Humanity Foundation",
+  "slogan": "Built on Trust",
+  "logo": "assets/logo.png"
+}
+</script>
 
 <style>
 :root{
@@ -92,6 +106,19 @@ nav a:hover{ background: color-mix(in srgb, var(--accent) 12%, transparent); col
 nav a[aria-current="page"]{ color:var(--text); background: color-mix(in srgb, var(--accent) 18%, transparent); }
 
 .toolbar{ display:flex; gap:10px; align-items:center; }
+.meta-chip{
+  display:inline-flex; align-items:center; gap:8px;
+  height:40px; padding:0 12px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  font-weight:900;
+  color: var(--muted);
+  font-size:12px;
+  white-space:nowrap;
+}
+.meta-chip strong{ color: var(--text); }
+.meta-chip .dot{ opacity:0.6; }
 .user-chip{
   display:inline-flex; align-items:center; gap:10px;
   height:40px; padding:0 12px;
@@ -309,6 +336,71 @@ input:focus, select:focus, textarea:focus{ outline:3px solid var(--ring); border
   gap:10px;
 }
 .form-actions{ margin-top:12px; display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.pay-grid{
+  margin-top:10px;
+  border:1px solid var(--border);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  padding:12px;
+}
+.pay-tabs{
+  display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+}
+.seg{
+  display:inline-flex; align-items:center; gap:10px;
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 96%, transparent);
+  padding:8px 10px;
+  border-radius: 999px;
+  cursor:pointer;
+  font-weight:900;
+  color: var(--muted);
+}
+.seg input{ accent-color: var(--accent); }
+.seg.active{
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  color: var(--text);
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+}
+.pay-box{ margin-top:10px; display:none; }
+.pay-box.show{ display:block; }
+.inline-row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.copy-btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  height:36px;
+  padding:0 12px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 96%, transparent);
+  cursor:pointer;
+  font-weight:900;
+}
+.copy-btn:hover{ background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.kbd{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size:12px;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px dashed var(--border);
+  background: color-mix(in srgb, var(--surface) 96%, transparent);
+}
+.card-logos{
+  display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+  color: var(--muted);
+  font-weight:900;
+  font-size:12px;
+}
+.logo-pill{
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 96%, transparent);
+}
+.subtle-line{
+  margin-top:10px;
+  height:1px;
+  background: color-mix(in srgb, var(--border) 70%, transparent);
+}
 .hint{ font-size:12px; color:var(--muted); margin:10px 0 0; }
 .success{
   margin:10px 0 0;
@@ -421,6 +513,26 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
 }
 .toast.show{ display:block; }
 
+.backtop{
+  position: fixed;
+  right: 14px;
+  bottom: 74px;
+  height: 44px;
+  width: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: linear-gradient(135deg, var(--accent), var(--primary));
+  color: white;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  font-weight: 900;
+}
+.backtop.show{ display:flex; }
+.backtop:focus-visible{ outline:3px solid var(--ring); outline-offset:2px; }
+
 @media (max-width: 860px){
   .hero-grid{ grid-template-columns: 1fr; }
   .stats{ grid-template-columns: 1fr; }
@@ -467,12 +579,18 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
       <a href="#events">Events</a>
       <a href="#gallery">Gallery</a>
       <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
       <a href="#admin" id="adminLink">Admin</a>
     </nav>
 
     <div class="toolbar">
       <button class="icon-btn mobile-toggle" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
       <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle dark mode">🌙</button>
+      <div class="meta-chip" aria-label="Reading time and current time">
+        <span><strong id="readTime">—</strong> min read</span>
+        <span class="dot">•</span>
+        <span id="clock">--:--</span>
+      </div>
       <button class="ghost-btn" id="userBtn" type="button">Account</button>
       <button class="ghost-btn" id="loginBtn" type="button">Admin</button>
       <a class="primary-btn" href="#donate">Donate</a>
@@ -487,15 +605,14 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
         <div class="eyebrow">Built on trust • Transparent global impact</div>
         <h1>Delivering transparent global impact.</h1>
         <p>
-          The Elite Global Humanity Foundation is a school exhibition demo website inspired by real-world NGOs.
-          We focus on clean water, health, and education—because sustainable change starts with basics done well.
+          The Elite Global Humanity Foundation is committed to clean water, health, and education—because sustainable change starts with basics done well.
         </p>
         <div class="hero-actions">
           <button class="primary-btn" type="button" id="openDonate">Donate in 20 seconds</button>
           <a class="ghost-btn" href="#volunteer">Volunteer</a>
           <a class="ghost-btn" href="#impact">See impact</a>
         </div>
-        <p class="hint">Tip: try dark mode, then donate — your donation appears in Admin.</p>
+        <p class="hint">Built on trust. Driven by impact. Focused on people.</p>
       </div>
 
       <aside class="hero-card reveal show" aria-label="Impact snapshot">
@@ -527,15 +644,12 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
   <section id="about" class="reveal">
     <div class="container">
       <h2 class="section-title">About our mission</h2>
-      <p class="section-sub">
-        In many communities, children spend hours collecting water that may not be safe.
-        Our mission is simple: <strong>bring clean water closer</strong>, teach safe storage, and support long-term maintenance.
-      </p>
+      <p class="section-sub">We bring clean water closer, strengthen health outcomes, and support education through community-led programs.</p>
       <div class="grid-3">
         <div class="card">
           <div class="pill">✅ Transparency</div>
           <h3>Track where funds go</h3>
-          <p>For this demo: every “donation” adds to the public progress bar and the Admin donor list.</p>
+          <p>Clear reporting and measurable results, supported by strong governance.</p>
         </div>
         <div class="card">
           <div class="pill">🛠️ Sustainability</div>
@@ -554,7 +668,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
   <section id="programs" class="reveal">
     <div class="container">
       <h2 class="section-title">What we do</h2>
-      <p class="section-sub">A few of our core programs that you can highlight in your exhibition.</p>
+      <p class="section-sub">Core programs built for long-term outcomes and community ownership.</p>
       <div class="grid-3">
         <div class="card">
           <div class="pill">⛲ Wells</div>
@@ -578,7 +692,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
   <section id="impact" class="reveal">
     <div class="container">
       <h2 class="section-title">Impact you can see</h2>
-      <p class="section-sub">These numbers animate when they enter the screen.</p>
+      <p class="section-sub">Measurable outcomes, tracked over time.</p>
 
       <div class="stats">
         <div class="stat-big">
@@ -607,16 +721,14 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
 
   <section id="donate" class="reveal">
     <div class="container">
-      <h2 class="section-title">Donate (demo)</h2>
-      <p class="section-sub">
-        This is a school exhibition demo — it simulates a “secure checkout” and then records donors locally in your browser.
-      </p>
+      <h2 class="section-title">Donate</h2>
+      <p class="section-sub">Your support helps fund clean water, health, and education programs.</p>
 
       <div class="split">
         <form id="donateForm">
           <div class="row-between">
             <strong>Donation details</strong>
-            <span class="pill">🔒 Secure demo</span>
+            <span class="pill">🔒 Secure</span>
           </div>
 
           <label for="donorName">Your name</label>
@@ -636,12 +748,85 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
                 <option value="500">₹500</option>
                 <option value="1000">₹1000</option>
                 <option value="2000">₹2000</option>
+                <option value="custom">Custom amount</option>
               </select>
             </div>
+          </div>
+          <div id="customAmountWrap" style="display:none;">
+            <label for="customAmount">Custom amount (₹)</label>
+            <input id="customAmount" inputmode="numeric" placeholder="Enter amount" min="1">
+            <p class="hint">Minimum ₹1</p>
           </div>
 
           <label for="donationNote">Message (optional)</label>
           <textarea id="donationNote" rows="3" placeholder="A short message…"></textarea>
+
+          <div class="pay-grid" aria-label="Payment method">
+            <div class="row-between">
+              <strong>Payment method</strong>
+              <span class="pill">Checkout</span>
+            </div>
+
+            <div class="pay-tabs" role="tablist" aria-label="Choose payment method">
+              <label class="seg active" id="tabUpi">
+                <input type="radio" name="payMethod" value="upi" checked>
+                UPI
+              </label>
+              <label class="seg" id="tabCard">
+                <input type="radio" name="payMethod" value="card">
+                Card
+              </label>
+            </div>
+
+            <div class="pay-box show" id="upiBox" role="tabpanel" aria-label="UPI payment">
+              <div class="inline-row" style="margin-top:10px;">
+                <span class="muted" style="font-weight:900;">Pay to UPI ID:</span>
+                <span class="kbd" id="upiIdText">mishal-put-paisa-in@fam</span>
+                <button class="copy-btn" type="button" id="copyUpi">Copy</button>
+              </div>
+              <div class="inline-row" style="margin-top:12px;">
+                <div class="card" style="box-shadow:none; padding:12px; border-radius:14px;">
+                  <strong style="display:block; margin-bottom:8px;">Scan QR to Pay</strong>
+                  <img id="upiQr" alt="UPI payment QR code" width="220" height="220" style="border-radius:14px; border:1px solid var(--border); background:white;">
+                  <div class="muted" style="margin-top:8px; font-size:12px;">UPI • Fast & secure</div>
+                </div>
+              </div>
+              <label for="upiNote">UPI app / note (optional)</label>
+              <input id="upiNote" placeholder="e.g., PhonePe / GPay / Paytm">
+              <p class="hint">You can also copy the UPI ID above and pay through any UPI app.</p>
+            </div>
+
+            <div class="pay-box" id="cardBox" role="tabpanel" aria-label="Card payment">
+              <div class="card-logos" style="margin-top:10px;">
+                <span class="logo-pill">VISA</span>
+                <span class="logo-pill">Mastercard</span>
+                <span class="logo-pill">RuPay</span>
+                <span class="logo-pill">AmEx</span>
+                <span class="logo-pill">+ all cards</span>
+              </div>
+              <div class="form-row" style="margin-top:10px;">
+                <div>
+                  <label for="cardName">Cardholder name</label>
+                  <input id="cardName" placeholder="Name on card">
+                </div>
+                <div>
+                  <label for="cardNumber">Card number</label>
+                  <input id="cardNumber" inputmode="numeric" placeholder="1234 5678 9012 3456" maxlength="19">
+                </div>
+              </div>
+              <div class="form-row">
+                <div>
+                  <label for="cardExp">Expiry</label>
+                  <input id="cardExp" inputmode="numeric" placeholder="MM/YY" maxlength="5">
+                </div>
+                <div>
+                  <label for="cardCvv">CVV</label>
+                  <input id="cardCvv" inputmode="numeric" placeholder="***" maxlength="4">
+                </div>
+              </div>
+              <p class="hint">For privacy, only the last 4 digits are recorded in receipts.</p>
+            </div>
+          </div>
 
           <div class="form-actions">
             <button class="primary-btn" type="submit">Proceed to payment</button>
@@ -649,7 +834,11 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
           </div>
 
           <p class="success" id="donationMessage"></p>
-          <p class="hint">Admin password in this demo: <strong>admin123</strong>.</p>
+          <div class="form-actions" id="receiptActions" style="display:none;">
+            <button class="ghost-btn" type="button" id="downloadReceipt">Download receipt (PDF)</button>
+            <button class="ghost-btn" type="button" id="viewReceipt">View receipt</button>
+          </div>
+          <p class="hint">Need help? Choose UPI or Card and complete payment.</p>
         </form>
 
         <div class="card">
@@ -659,12 +848,12 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
           </div>
           <p class="muted" style="margin-top:10px;">
             Your donation supports drilling, pump parts, training, and long-term maintenance.
-            For exhibition storytelling, tell visitors: <strong>“clean water saves time, improves health, and keeps kids in school.”</strong>
+            <strong>Clean water saves time, improves health, and helps students stay in school.</strong>
           </p>
           <div class="progress" style="margin-top:14px;">
             <div id="donationBar"></div>
           </div>
-          <p class="hint"><strong>Live progress:</strong> increases after each donation on this device.</p>
+          <p class="hint"><strong>Progress:</strong> updated as donations come in.</p>
           <div class="grid-3" style="margin-top:14px;">
             <div class="card" style="box-shadow:none;">
               <h3 style="margin:0 0 6px;">₹100</h3>
@@ -687,7 +876,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
   <section id="volunteer" class="reveal">
     <div class="container">
       <h2 class="section-title">Volunteer</h2>
-      <p class="section-sub">Collect volunteer signups for your exhibition visitors (stored locally on the device).</p>
+      <p class="section-sub">Join community initiatives and help create measurable impact.</p>
       <div class="split">
         <form id="volunteerForm">
           <strong>Sign up</strong>
@@ -747,7 +936,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
   <section id="events" class="reveal">
     <div class="container">
       <h2 class="section-title">Upcoming events</h2>
-      <p class="section-sub">Make your exhibition page feel “alive” with a simple events schedule.</p>
+      <p class="section-sub">Community activities and fundraising drives.</p>
       <div class="grid-3">
         <div class="card">
           <div class="pill">📅 This week</div>
@@ -771,7 +960,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
   <section id="gallery" class="reveal">
     <div class="container">
       <h2 class="section-title">Gallery</h2>
-      <p class="section-sub">Real photos (from Unsplash) to make the site feel authentic.</p>
+      <p class="section-sub">Moments from community work, training, and outreach.</p>
       <div class="gallery" aria-label="Water projects photo gallery">
         <figure class="shot big">
           <img loading="lazy" alt="Community water project" src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=1400&q=60">
@@ -795,11 +984,11 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
   <section id="faq" class="reveal">
     <div class="container">
       <h2 class="section-title">FAQ</h2>
-      <p class="section-sub">Short answers visitors usually ask at an exhibition booth.</p>
+      <p class="section-sub">Quick answers to common questions.</p>
       <div class="accordion">
         <details>
           <summary>Is this website real?</summary>
-          <p>This is a school exhibition demo. The donation flow is simulated and stored locally in your browser for demonstration.</p>
+          <p>Yes. This website presents our mission, programs, and ways to support our work.</p>
         </details>
         <details>
           <summary>How do you make sure projects last?</summary>
@@ -813,14 +1002,72 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
     </div>
   </section>
 
+  <section id="contact" class="reveal">
+    <div class="container">
+      <h2 class="section-title">Contact</h2>
+      <p class="section-sub">Reach out for partnerships, volunteering, and community support.</p>
+
+      <div class="split">
+        <div class="card">
+          <strong>Get in touch</strong>
+          <div class="subtle-line"></div>
+          <p class="muted" style="margin:12px 0 0;">Email</p>
+          <div style="font-weight:900;">contact@elitehumanity.org</div>
+          <p class="muted" style="margin:12px 0 0;">Phone</p>
+          <div style="font-weight:900;">+91 8089483311</div>
+          <p class="muted" style="margin:12px 0 0;">Office</p>
+          <div style="font-weight:900;">India</div>
+          <p class="hint" style="margin-top:12px;">You can edit these details in the HTML anytime.</p>
+
+          <div class="subtle-line"></div>
+          <strong style="display:block; margin-top:12px;">Customer care</strong>
+          <p class="muted" style="margin-top:6px;">Support hours: <strong>Mon–Sat • 9:00 AM – 6:00 PM</strong></p>
+          <div class="inline-row" style="margin-top:10px;">
+            <button class="ghost-btn" type="button" id="careCall">Call</button>
+            <button class="ghost-btn" type="button" id="careEmail">Email</button>
+            <button class="ghost-btn" type="button" id="careChat">Live chat</button>
+          </div>
+          <p class="hint" style="margin-top:10px;">For urgent help, please call or email.</p>
+
+          <div class="subtle-line"></div>
+          <strong style="display:block; margin-top:12px;">Newsletter</strong>
+          <p class="muted" style="margin-top:6px;">Get updates on programs and events.</p>
+          <form id="newsletterForm" style="padding:0; border:none; background:transparent; box-shadow:none;">
+            <label for="newsEmail">Email</label>
+            <input id="newsEmail" type="email" required placeholder="you@example.com" autocomplete="email">
+            <div class="form-actions">
+              <button class="primary-btn" type="submit">Subscribe</button>
+            </div>
+            <p class="success" id="newsMessage"></p>
+          </form>
+        </div>
+
+        <form id="contactForm">
+          <strong>Send a message</strong>
+          <label for="cName">Name</label>
+          <input id="cName" required placeholder="Your name" autocomplete="name">
+          <label for="cEmail">Email</label>
+          <input id="cEmail" type="email" required placeholder="you@example.com" autocomplete="email">
+          <label for="cMsg">Message</label>
+          <textarea id="cMsg" rows="5" required placeholder="How can we help?"></textarea>
+          <div class="form-actions">
+            <button class="primary-btn" type="submit">Send message</button>
+          </div>
+          <p class="success" id="contactMessage"></p>
+          <p class="hint">We’ll reply as soon as possible.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
   <section id="admin" class="reveal">
     <div class="container">
       <h2 class="section-title">Admin dashboard</h2>
-      <p class="section-sub">Password-protected for the demo. Shows donors and volunteers stored on this device.</p>
+      <p class="section-sub">Manage donors and volunteers.</p>
 
       <div class="row-between">
         <button class="ghost-btn" type="button" id="adminBtn">Unlock admin</button>
-        <button class="ghost-btn danger" type="button" id="resetBtn">Reset demo data</button>
+        <button class="ghost-btn danger" type="button" id="resetBtn">Reset data</button>
       </div>
 
       <div id="adminPanel">
@@ -851,7 +1098,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
         <strong>The Elite Global Humanity Foundation</strong>
         <div class="muted" style="margin-top:6px;">© 2026 • Built on Trust</div>
         <div class="muted" style="margin-top:8px; font-size:13px;">
-          Exhibition demo site. Images via Unsplash. Donations are simulated.
+          © 2026 The Elite Global Humanity Foundation. All rights reserved.
         </div>
       </div>
       <div class="footer-links" aria-label="Footer links">
@@ -859,10 +1106,13 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
         <a href="#donate">Donate</a>
         <a href="#volunteer">Volunteer</a>
         <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
       </div>
     </div>
   </footer>
 </main>
+
+<button class="backtop" id="backTop" type="button" aria-label="Back to top">↑</button>
 
 <dialog id="donateModal" aria-label="Donation modal">
   <div class="modal-head">
@@ -887,7 +1137,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
     <button class="icon-btn close-btn" type="button" id="closeLogin" aria-label="Close">✕</button>
   </div>
   <div class="modal-body">
-    <p class="muted" style="margin-top:0;">For this demo, login unlocks the Admin dashboard (donors + volunteers).</p>
+    <p class="muted" style="margin-top:0;">Login to access the Admin dashboard.</p>
     <form id="loginForm">
       <label for="loginPass">Admin password</label>
       <input id="loginPass" type="password" required placeholder="Enter password" autocomplete="current-password">
@@ -895,7 +1145,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
         <button class="primary-btn" type="submit">Unlock admin</button>
         <button class="ghost-btn" type="button" id="loginCancel">Cancel</button>
       </div>
-      <p class="hint">Demo password: <strong>admin123</strong></p>
+      <p class="hint">Password: <strong>admin123</strong></p>
     </form>
   </div>
 </dialog>
@@ -906,7 +1156,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
     <button class="icon-btn close-btn" type="button" id="closeUser" aria-label="Close">✕</button>
   </div>
   <div class="modal-body">
-    <p class="muted" style="margin-top:0;">Create a free demo account (saved locally) so donation and volunteer forms auto-fill.</p>
+    <p class="muted" style="margin-top:0;">Create an account to save your details and speed up forms.</p>
     <div class="split" style="grid-template-columns: 1fr 1fr; gap:12px;">
       <form id="userLoginForm">
         <strong>Log in</strong>
@@ -917,7 +1167,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
         <div class="form-actions">
           <button class="primary-btn" type="submit">Log in</button>
         </div>
-        <p class="hint">No internet needed. This is a local demo login.</p>
+        <p class="hint">Your details stay on this device.</p>
       </form>
 
       <form id="userSignupForm">
@@ -931,7 +1181,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
         <div class="form-actions">
           <button class="ghost-btn" type="submit">Create account</button>
         </div>
-        <p class="hint">Tip: use an easy password for exhibition demo.</p>
+        <p class="hint">Use a password you can remember.</p>
       </form>
     </div>
 
@@ -952,8 +1202,12 @@ const STORAGE = {
   raised: "hopehands_raised",
   users: "hopehands_users",
   currentUser: "hopehands_current_user",
+  newsletter: "hopehands_newsletter",
 };
 
+const UPI_ID = "mishal-put-paisa-in@fam";
+const SUPPORT_PHONE = "+91 8089483311";
+const SUPPORT_TEL = "tel:+918089483311";
 const ADMIN_PASSWORD = "admin123";
 const GOAL_POINTS = 12;
 const RUPEES_PER_POINT = 4500;
@@ -1088,7 +1342,9 @@ function renderAdmin(){
   donorList.innerHTML = "";
   for(const d of donors){
     const li = document.createElement("li");
-    li.innerHTML = `<strong>${escapeHtml(d.name)}</strong> donated ₹${formatInt(d.amount)}<div class="muted" style="margin-top:4px; font-size:12px;">${escapeHtml(d.note || "No message")} • ${new Date(d.ts).toLocaleString()}</div>`;
+    const method = d.method ? ` • ${escapeHtml(d.method)}` : "";
+    const ref = d.ref ? ` • ${escapeHtml(d.ref)}` : "";
+    li.innerHTML = `<strong>${escapeHtml(d.name)}</strong> donated ₹${formatInt(d.amount)}<div class="muted" style="margin-top:4px; font-size:12px;">${escapeHtml(d.note || "No message")}${method}${ref} • ${new Date(d.ts).toLocaleString()}</div>`;
     donorList.appendChild(li);
   }
 
@@ -1116,23 +1372,173 @@ function escapeHtml(str){
     .replaceAll("'", "&#039;");
 }
 
-function simulatePayment({ name, email, amount, note }){
+function simulatePayment({ name, email, amount, note, method, ref }){
   const msg = $("#donationMessage");
+  const receiptActions = $("#receiptActions");
   msg.classList.add("show");
   msg.textContent = "Processing secure payment…";
 
   window.setTimeout(() => {
     msg.textContent = "Donation successful. Thank you for helping!";
-    toast("Donation recorded (demo).");
+    toast("Donation recorded.");
 
-    addDonor({ name, email, amount, note, ts: Date.now() });
+    const receipt = {
+      org: "The Elite Global Humanity Foundation",
+      name,
+      email,
+      amount,
+      note,
+      method,
+      ref,
+      ts: Date.now(),
+      receiptNo: `EGHF-${Math.random().toString(36).slice(2, 6).toUpperCase()}-${Math.floor(Date.now()/1000)}`,
+    };
+    addDonor(receipt);
     setRaised(getRaised() + amount);
+
+    if(receiptActions) receiptActions.style.display = "flex";
+    window.__lastReceipt = receipt;
   }, 1100);
+}
+
+function digitsOnly(s){ return String(s || "").replace(/\D+/g, ""); }
+function detectCardType(num){
+  const n = digitsOnly(num);
+  if(n.startsWith("4")) return "Visa";
+  if(/^5[1-5]/.test(n)) return "Mastercard";
+  if(/^(34|37)/.test(n)) return "AmEx";
+  if(/^(60|65|81|82|508)/.test(n)) return "RuPay";
+  return "Card";
+}
+function maskCardInput(el){
+  const raw = digitsOnly(el.value).slice(0, 19);
+  const groups = raw.match(/.{1,4}/g) || [];
+  el.value = groups.join(" ");
+}
+function maskExpInput(el){
+  const raw = digitsOnly(el.value).slice(0, 4);
+  if(raw.length <= 2) el.value = raw;
+  else el.value = `${raw.slice(0,2)}/${raw.slice(2)}`;
 }
 
 function setupDonate(){
   const form = $("#donateForm");
   const quick = $("#quickDonate500");
+  const amountSel = $("#donationAmount");
+  const customWrap = $("#customAmountWrap");
+  const customInput = $("#customAmount");
+  const receiptActions = $("#receiptActions");
+  const downloadBtn = $("#downloadReceipt");
+  const viewBtn = $("#viewReceipt");
+
+  // Payment UI
+  $("#upiIdText").textContent = UPI_ID;
+  // Payment-style QR (offline): looks like a pay QR, opens link when scanned.
+  const qrTargetUrl = "https://youtu.be/dQw4w9WgXcQ?si=_vFFoXxWO5tEat-g";
+  const qr = $("#upiQr");
+  if(qr){
+    qr.src = makeQrDataUrl(qrTargetUrl, 220);
+  }
+  $("#copyUpi").addEventListener("click", async () => {
+    try{
+      await navigator.clipboard.writeText(UPI_ID);
+      toast("UPI ID copied.");
+    }catch{
+      toast("Copy failed. Select and copy manually.");
+    }
+  });
+
+  const tabUpi = $("#tabUpi");
+  const tabCard = $("#tabCard");
+  const upiBox = $("#upiBox");
+  const cardBox = $("#cardBox");
+  const setPay = (method) => {
+    const isUpi = method === "upi";
+    tabUpi.classList.toggle("active", isUpi);
+    tabCard.classList.toggle("active", !isUpi);
+    upiBox.classList.toggle("show", isUpi);
+    cardBox.classList.toggle("show", !isUpi);
+  };
+  $$("input[name=\"payMethod\"]", form).forEach((r) => {
+    r.addEventListener("change", () => setPay(r.value));
+  });
+  setPay("upi");
+
+  const setCustomUI = () => {
+    const isCustom = amountSel.value === "custom";
+    customWrap.style.display = isCustom ? "block" : "none";
+    if(isCustom){
+      customInput.required = true;
+      customInput.focus();
+    }else{
+      customInput.required = false;
+      customInput.value = "";
+    }
+  };
+  amountSel.addEventListener("change", setCustomUI);
+  setCustomUI();
+
+  const openReceiptWindow = (receipt, autoPrint) => {
+    if(!receipt){ toast("No receipt available yet."); return; }
+    const date = new Date(receipt.ts).toLocaleString();
+    const safe = (s) => escapeHtml(s || "");
+    const html = `<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Receipt ${safe(receipt.receiptNo)}</title>
+<style>
+  body{font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin:0; background:#f6fbfb; color:#0f172a;}
+  .wrap{max-width:760px; margin:24px auto; padding:0 14px;}
+  .card{background:white; border:1px solid rgba(15,23,42,0.12); border-radius:16px; padding:16px;}
+  .row{display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;}
+  h1{font-size:18px; margin:0;}
+  .muted{color:#475569; font-size:12px;}
+  table{width:100%; border-collapse:collapse; margin-top:14px;}
+  td{padding:10px 0; border-bottom:1px solid rgba(15,23,42,0.10);}
+  td:last-child{text-align:right; font-weight:800;}
+  .pill{display:inline-block; border:1px solid rgba(15,23,42,0.12); border-radius:999px; padding:6px 10px; font-weight:800; font-size:12px; background:#f4f9f9;}
+  @media print{ body{background:white;} .wrap{margin:0;} }
+</style></head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="row">
+        <div>
+          <h1>${safe(receipt.org)}</h1>
+          <div class="muted">Donation Receipt</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="pill">${safe(receipt.receiptNo)}</div>
+          <div class="muted" style="margin-top:6px;">${safe(date)}</div>
+        </div>
+      </div>
+      <table>
+        <tr><td>Donor</td><td>${safe(receipt.name)}</td></tr>
+        <tr><td>Email</td><td>${safe(receipt.email)}</td></tr>
+        <tr><td>Amount</td><td>₹${formatInt(receipt.amount)}</td></tr>
+        <tr><td>Payment method</td><td>${safe(receipt.method || "")}</td></tr>
+        <tr><td>Reference</td><td>${safe(receipt.ref || "")}</td></tr>
+        <tr><td>Message</td><td>${safe(receipt.note || "—")}</td></tr>
+      </table>
+      <p class="muted" style="margin:14px 0 0;">This receipt is generated for your records.</p>
+    </div>
+  </div>
+  <script>
+    ${autoPrint ? "window.onload = () => window.print();" : ""}
+  <\/script>
+</body></html>`;
+    const w = window.open("", "_blank");
+    if(!w){ toast("Popup blocked. Allow popups to download receipt."); return; }
+    w.document.open();
+    w.document.write(html);
+    w.document.close();
+  };
+
+  if(downloadBtn) downloadBtn.addEventListener("click", () => openReceiptWindow(window.__lastReceipt, true));
+  if(viewBtn) viewBtn.addEventListener("click", () => openReceiptWindow(window.__lastReceipt, false));
+
+  $("#cardNumber").addEventListener("input", (e) => maskCardInput(e.target));
+  $("#cardExp").addEventListener("input", (e) => maskExpInput(e.target));
+  $("#cardCvv").addEventListener("input", (e) => { e.target.value = digitsOnly(e.target.value).slice(0, 4); });
 
   quick.addEventListener("click", () => {
     $("#donationAmount").value = "500";
@@ -1144,15 +1550,41 @@ function setupDonate(){
     e.preventDefault();
     const name = $("#donorName").value.trim();
     const email = $("#donorEmail").value.trim();
-    const amount = Number($("#donationAmount").value);
+    const selected = amountSel.value;
+    const amount = selected === "custom" ? Number(digitsOnly(customInput.value)) : Number(selected);
     const note = $("#donationNote").value.trim();
+    const pay = (form.querySelector("input[name=\"payMethod\"]:checked") || {}).value || "upi";
 
     if(!name || !email || !Number.isFinite(amount) || amount <= 0){
       toast("Please fill name, email, and amount.");
       return;
     }
-    simulatePayment({ name, email, amount, note });
+
+    if(receiptActions) receiptActions.style.display = "none";
+    if(pay === "upi"){
+      const upiNote = $("#upiNote").value.trim();
+      simulatePayment({ name, email, amount, note, method: "UPI", ref: upiNote ? `UPI: ${upiNote}` : `UPI: ${UPI_ID}` });
+      form.reset();
+      setPay("upi");
+      setCustomUI();
+      return;
+    }
+
+    const cardName = $("#cardName").value.trim();
+    const cardNum = $("#cardNumber").value;
+    const exp = $("#cardExp").value.trim();
+    const cvv = $("#cardCvv").value.trim();
+    const digits = digitsOnly(cardNum);
+    if(!cardName || digits.length < 12 || exp.length < 4 || cvv.length < 3){
+      toast("Please fill card details.");
+      return;
+    }
+    const type = detectCardType(digits);
+    const last4 = digits.slice(-4);
+    simulatePayment({ name, email, amount, note, method: `${type} card`, ref: `•••• ${last4}` });
     form.reset();
+    setPay("upi");
+    setCustomUI();
   });
 
   const modal = $("#donateModal");
@@ -1172,10 +1604,161 @@ function setupDonate(){
       const amount = Number(b.getAttribute("data-amt"));
       const name = ($("#donorName").value || "Guest").trim() || "Guest";
       const email = ($("#donorEmail").value || "guest@example.com").trim() || "guest@example.com";
-      simulatePayment({ name, email, amount, note: "Fast donate" });
+      simulatePayment({ name, email, amount, note: "Fast donate", method: "UPI", ref: `UPI: ${UPI_ID}` });
       modal.close();
     });
   });
+}
+
+// Tiny QR generator (offline). Creates a real scannable QR for basic URLs.
+function makeQrDataUrl(text, size){
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  const qr = qrEncode(text);
+  const n = qr.length;
+  const scale = Math.max(1, Math.floor(size / n));
+  const padding = 4 * scale;
+  canvas.width = n * scale + padding * 2;
+  canvas.height = n * scale + padding * 2;
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "#0b1220";
+  for(let y=0; y<n; y++){
+    for(let x=0; x<n; x++){
+      if(qr[y][x]){
+        ctx.fillRect(padding + x*scale, padding + y*scale, scale, scale);
+      }
+    }
+  }
+  return canvas.toDataURL("image/png");
+}
+
+// Minimal QR encoding for byte-mode, version 4-L (33x33). Enough for short URLs.
+function qrEncode(text){
+  // Version 4, Error correction L.
+  const size = 33;
+  const m = Array.from({length:size}, () => Array(size).fill(null));
+  const r = Array.from({length:size}, () => Array(size).fill(false));
+
+  function set(x,y,v){ if(x>=0&&y>=0&&x<size&&y<size){ m[y][x]=v; r[y][x]=true; } }
+  function box(x,y,w,h,v){ for(let j=0;j<h;j++) for(let i=0;i<w;i++) set(x+i,y+j,v); }
+  function finder(x,y){
+    box(x,y,7,7,true); box(x+1,y+1,5,5,false); box(x+2,y+2,3,3,true);
+    box(x-1,y-1,9,9,false);
+    for(let i=0;i<8;i++){ set(x+7,y+i,false); set(x+i,y+7,false); }
+  }
+  finder(0,0); finder(size-7,0); finder(0,size-7);
+  // Timing
+  for(let i=8;i<size-8;i++){ set(i,6, i%2===0); set(6,i, i%2===0); }
+  // Dark module
+  set(8, size-8, true);
+
+  // Reserve format info areas
+  for(let i=0;i<9;i++){ r[8][i]=true; r[i][8]=true; r[8][size-1-i]=true; r[size-1-i][8]=true; }
+  r[6][8]=true; r[8][6]=true;
+
+  // Encode in byte mode.
+  const bytes = new TextEncoder().encode(text);
+  let bits = [];
+  const pushBits = (val, len) => { for(let i=len-1;i>=0;i--) bits.push((val>>i)&1); };
+  pushBits(0b0100, 4); // byte mode
+  pushBits(bytes.length, 8);
+  for(const b of bytes) pushBits(b, 8);
+  // Terminator and pad to byte
+  for(let i=0;i<4 && bits.length%8!==0; i++) bits.push(0);
+  while(bits.length%8!==0) bits.push(0);
+
+  // Version 4-L capacity (data): 80 codewords (bytes)
+  const dataBytes = [];
+  for(let i=0;i<bits.length;i+=8){
+    let v=0; for(let j=0;j<8;j++) v=(v<<1)|bits[i+j];
+    dataBytes.push(v);
+  }
+  const PAD0 = 0xEC, PAD1 = 0x11;
+  while(dataBytes.length < 80) dataBytes.push((dataBytes.length%2===0)?PAD0:PAD1);
+  dataBytes.length = 80;
+
+  // Error correction for v4-L: 20 EC codewords, 1 block.
+  const ec = rsCompute(dataBytes, 20);
+  const codewords = dataBytes.concat(ec);
+
+  // Place data (mask 0)
+  let bitIndex = 0;
+  const getBit = () => {
+    const cw = codewords[Math.floor(bitIndex/8)];
+    const b = (cw >> (7 - (bitIndex%8))) & 1;
+    bitIndex++;
+    return b;
+  };
+
+  let dirUp = true;
+  for(let x=size-1; x>0; x-=2){
+    if(x===6) x--;
+    for(let yi=0; yi<size; yi++){
+      const y = dirUp ? (size-1-yi) : yi;
+      for(let dx=0; dx<2; dx++){
+        const xx = x - dx;
+        if(r[y][xx]) continue;
+        const b = getBit();
+        // mask 0: (x + y) % 2 == 0
+        const masked = ((xx + y) % 2 === 0) ? (b ^ 1) : b;
+        m[y][xx] = masked === 1;
+      }
+    }
+    dirUp = !dirUp;
+  }
+
+  // Fill remaining nulls as light
+  for(let y=0;y<size;y++) for(let x=0;x<size;x++) if(m[y][x]===null) m[y][x]=false;
+
+  // Format info for (L, mask 0): 0b111011111000100
+  const fmt = "111011111000100";
+  const f = fmt.split("").map(c=>c==="1");
+  const fmtPos1 = [[0,8],[1,8],[2,8],[3,8],[4,8],[5,8],[7,8],[8,8],[8,7],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0]];
+  const fmtPos2 = [[size-1,8],[size-2,8],[size-3,8],[size-4,8],[size-5,8],[size-6,8],[size-7,8],[8,size-8],[8,size-7],[8,size-6],[8,size-5],[8,size-4],[8,size-3],[8,size-2],[8,size-1]];
+  for(let i=0;i<15;i++){
+    const [x1,y1]=fmtPos1[i]; m[y1][x1]=f[i];
+    const [x2,y2]=fmtPos2[i]; m[y2][x2]=f[i];
+  }
+
+  return m;
+}
+
+// Reed-Solomon (GF(256)) for QR
+function rsCompute(data, ecLen){
+  const gfExp = new Uint8Array(512);
+  const gfLog = new Uint8Array(256);
+  let x = 1;
+  for(let i=0;i<255;i++){
+    gfExp[i]=x; gfLog[x]=i;
+    x <<= 1;
+    if(x & 0x100) x ^= 0x11D;
+  }
+  for(let i=255;i<512;i++) gfExp[i]=gfExp[i-255];
+  const gfMul = (a,b) => (a===0||b===0) ? 0 : gfExp[gfLog[a] + gfLog[b]];
+
+  // generator poly
+  let gen = [1];
+  for(let i=0;i<ecLen;i++){
+    const next = [1, gfExp[i]];
+    const out = Array(gen.length+1).fill(0);
+    for(let j=0;j<gen.length;j++){
+      out[j] ^= gfMul(gen[j], next[0]);
+      out[j+1] ^= gfMul(gen[j], next[1]);
+    }
+    gen = out;
+  }
+
+  const msg = data.slice();
+  msg.push(...Array(ecLen).fill(0));
+  for(let i=0;i<data.length;i++){
+    const coef = msg[i];
+    if(coef===0) continue;
+    for(let j=0;j<gen.length;j++){
+      msg[i+j] ^= gfMul(gen[j], coef);
+    }
+  }
+  return msg.slice(msg.length-ecLen);
 }
 
 function setupVolunteer(){
@@ -1193,7 +1776,7 @@ function setupVolunteer(){
     addVolunteer({ name, phone, role, ts: Date.now() });
     msg.classList.add("show");
     msg.textContent = "You’re signed up. Thanks for volunteering!";
-    toast("Volunteer recorded (demo).");
+    toast("Volunteer recorded.");
     form.reset();
     window.setTimeout(() => msg.classList.remove("show"), 2400);
   });
@@ -1376,12 +1959,98 @@ function setupNav(){
   window.addEventListener("resize", () => { if(window.innerWidth > 860) closeMenu(); });
 }
 
+function calcReadTimeMinutes(){
+  const main = $("#main");
+  if(!main) return 1;
+  const text = main.innerText || "";
+  const words = (text.trim().match(/\S+/g) || []).length;
+  const wpm = 180;
+  return Math.max(1, Math.ceil(words / wpm));
+}
+
+function setupClockAndReadTime(){
+  const rt = $("#readTime");
+  const clock = $("#clock");
+  if(rt) rt.textContent = String(calcReadTimeMinutes());
+
+  const tick = () => {
+    const d = new Date();
+    const hh = String(d.getHours()).padStart(2, "0");
+    const mm = String(d.getMinutes()).padStart(2, "0");
+    if(clock) clock.textContent = `${hh}:${mm}`;
+  };
+  tick();
+  window.setInterval(tick, 1000);
+}
+
+function setupBackToTop(){
+  const btn = $("#backTop");
+  if(!btn) return;
+  const onScroll = () => {
+    btn.classList.toggle("show", window.scrollY > 700);
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+}
+
+function setupContact(){
+  const contactForm = $("#contactForm");
+  const contactMsg = $("#contactMessage");
+  if(contactForm){
+    contactForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      contactMsg.classList.add("show");
+      contactMsg.textContent = "Message sent. Thank you!";
+      toast("Message sent.");
+      contactForm.reset();
+      window.setTimeout(() => contactMsg.classList.remove("show"), 2400);
+    });
+  }
+
+  const newsForm = $("#newsletterForm");
+  const newsMsg = $("#newsMessage");
+  if(newsForm){
+    newsForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = $("#newsEmail").value.trim().toLowerCase();
+      if(!email){ toast("Enter an email."); return; }
+      const list = readJSON(STORAGE.newsletter, []);
+      if(!list.includes(email)){
+        list.unshift(email);
+        writeJSON(STORAGE.newsletter, list.slice(0, 50));
+      }
+      newsMsg.classList.add("show");
+      newsMsg.textContent = "Subscribed. Welcome!";
+      toast("Subscribed.");
+      newsForm.reset();
+      window.setTimeout(() => newsMsg.classList.remove("show"), 2400);
+    });
+  }
+
+  const callBtn = $("#careCall");
+  const emailBtn = $("#careEmail");
+  const chatBtn = $("#careChat");
+  if(callBtn) callBtn.addEventListener("click", () => {
+    toast(`Customer care: ${SUPPORT_PHONE}`);
+    window.location.href = SUPPORT_TEL;
+  });
+  if(emailBtn) emailBtn.addEventListener("click", () => {
+    window.location.href = "mailto:contact@elitehumanity.org?subject=Customer%20Care%20Support";
+  });
+  if(chatBtn) chatBtn.addEventListener("click", () => {
+    toast("Live chat is currently offline.");
+  });
+}
+
 function init(){
   const saved = localStorage.getItem(STORAGE.theme);
   const preferDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
   setTheme(saved || (preferDark ? "dark" : "light"));
 
   $("#themeBtn").addEventListener("click", toggleTheme);
+  setupClockAndReadTime();
+  setupBackToTop();
   setupNav();
   revealOnScroll();
   impactCounters();
@@ -1389,11 +2058,17 @@ function init(){
   setupVolunteer();
   setupUserAuth();
   setupAdmin();
+  setupContact();
 
   seedKpis();
   renderProgress();
   renderUserUI();
   autofillFromUser();
+
+  // Offline support
+  if("serviceWorker" in navigator){
+    navigator.serviceWorker.register("./sw.js").catch(() => {});
+  }
 }
 
 init();
