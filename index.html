@@ -408,11 +408,54 @@ section{
 }
 .leader-item:last-child{ border-bottom:none; }
 .badge-pill{
-  padding:4px 8px;
+  padding:4px 10px;
   border-radius:999px;
   border:1px solid var(--border);
   font-size:11px;
-  font-weight:800;
+  font-weight:900;
+  letter-spacing:0.2px;
+}
+.badge-pill.supporter{
+  background: color-mix(in srgb, var(--muted) 12%, transparent);
+  color: var(--muted);
+}
+.badge-pill.bronze{
+  background: linear-gradient(135deg, rgba(180,83,9,0.16), rgba(217,119,6,0.12));
+  border-color: color-mix(in srgb, #d97706 30%, var(--border));
+  color: #d97706;
+}
+.badge-pill.silver{
+  background: linear-gradient(135deg, rgba(107,114,128,0.16), rgba(156,163,175,0.12));
+  border-color: color-mix(in srgb, #9ca3af 30%, var(--border));
+  color: #6b7280;
+}
+.badge-pill.gold{
+  background: linear-gradient(135deg, rgba(217,119,6,0.20), rgba(245,158,11,0.16));
+  border-color: color-mix(in srgb, #f59e0b 35%, var(--border));
+  color: #d97706;
+}
+.badge-pill.platinum{
+  background: linear-gradient(135deg, rgba(99,102,241,0.20), rgba(139,92,246,0.16));
+  border-color: color-mix(in srgb, #8b5cf6 35%, var(--border));
+  color: #6366f1;
+}
+.badge-legend{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:8px;
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px solid color-mix(in srgb, var(--border) 70%, transparent);
+}
+.badge-legend-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:12px;
+}
+.badge-legend-item .badge-pill{
+  margin:0;
+  flex-shrink:0;
 }
 
 .split{
@@ -1125,6 +1168,28 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
           <strong style="display:block; margin-top:12px;">Donor achievements</strong>
           <p class="muted" id="badgeSummary" style="margin-top:6px; font-size:13px;">No donors yet. Be the first to give.</p>
           <ul class="leader-list" id="leaderList"></ul>
+          <div class="badge-legend" id="badgeLegend" style="display:none;">
+            <div class="badge-legend-item">
+              <span class="badge-pill supporter">Supporter</span>
+              <span class="muted" style="font-size:11px;">₹1-499</span>
+            </div>
+            <div class="badge-legend-item">
+              <span class="badge-pill bronze">Bronze</span>
+              <span class="muted" style="font-size:11px;">₹500-999</span>
+            </div>
+            <div class="badge-legend-item">
+              <span class="badge-pill silver">Silver</span>
+              <span class="muted" style="font-size:11px;">₹1000-1999</span>
+            </div>
+            <div class="badge-legend-item">
+              <span class="badge-pill gold">Gold</span>
+              <span class="muted" style="font-size:11px;">₹2000-4999</span>
+            </div>
+            <div class="badge-legend-item" style="grid-column:span 2;">
+              <span class="badge-pill platinum">Platinum</span>
+              <span class="muted" style="font-size:11px;">₹5000+</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1586,13 +1651,47 @@ function revealOnScroll(){
 
 function impactCounters(){
   const root = $("#impact");
+  let hasAnimated = false;
+  let autoIncrementInterval = null;
+  
   const io = new IntersectionObserver((entries) => {
     for(const e of entries){
-      if(!e.isIntersecting) continue;
+      if(!e.isIntersecting || hasAnimated) continue;
+      hasAnimated = true;
       animateCount($("#peopleCounter"), 0, 5000, 1100);
       animateCount($("#statHours"), 0, 320, 900);
       animateCount($("#statKids"), 0, 1250, 1000);
       animateCount($("#statVillages"), 0, 28, 800);
+      
+      // Auto-increment counters slowly over time (only when visible and tab active)
+      const startAutoIncrement = () => {
+        if(autoIncrementInterval) return;
+        let peopleVal = 5000, hoursVal = 320, kidsVal = 1250, villagesVal = 28;
+        autoIncrementInterval = setInterval(() => {
+          if(document.hidden) return;
+          const elPeople = $("#peopleCounter");
+          const elHours = $("#statHours");
+          const elKids = $("#statKids");
+          const elVillages = $("#statVillages");
+          if(elPeople && Math.random() < 0.3){
+            peopleVal += Math.floor(Math.random() * 3) + 1;
+            elPeople.textContent = formatInt(peopleVal);
+          }
+          if(elHours && Math.random() < 0.25){
+            hoursVal += Math.floor(Math.random() * 2) + 1;
+            elHours.textContent = formatInt(hoursVal);
+          }
+          if(elKids && Math.random() < 0.3){
+            kidsVal += Math.floor(Math.random() * 3) + 1;
+            elKids.textContent = formatInt(kidsVal);
+          }
+          if(elVillages && Math.random() < 0.15){
+            villagesVal += 1;
+            elVillages.textContent = formatInt(villagesVal);
+          }
+        }, 12000);
+      };
+      setTimeout(startAutoIncrement, 2000);
       io.disconnect();
     }
   }, { threshold: 0.25 });
@@ -2055,10 +2154,12 @@ function renderAchievements(){
   const donors = getDonors();
   const badgeEl = $("#badgeSummary");
   const listEl = $("#leaderList");
+  const legendEl = $("#badgeLegend");
   if(!badgeEl || !listEl) return;
   if(!donors.length){
     badgeEl.textContent = "No donors yet. Be the first to give.";
     listEl.innerHTML = "";
+    if(legendEl) legendEl.style.display = "none";
     return;
   }
   const totals = new Map();
@@ -2072,19 +2173,20 @@ function renderAchievements(){
   badgeEl.textContent = `Top supporters: ₹${formatInt(totalAmt)} across ${entries.length} donors.`;
   listEl.innerHTML = "";
   const badgeFor = (amt) => {
-    if(amt >= 5000) return "Platinum";
-    if(amt >= 2000) return "Gold";
-    if(amt >= 1000) return "Silver";
-    if(amt >= 500) return "Bronze";
-    return "Supporter";
+    if(amt >= 5000) return {name:"Platinum", class:"platinum"};
+    if(amt >= 2000) return {name:"Gold", class:"gold"};
+    if(amt >= 1000) return {name:"Silver", class:"silver"};
+    if(amt >= 500) return {name:"Bronze", class:"bronze"};
+    return {name:"Supporter", class:"supporter"};
   };
   entries.forEach(([name,amt]) => {
     const li = document.createElement("li");
     li.className = "leader-item";
     const badge = badgeFor(amt);
-    li.innerHTML = `<span>${escapeHtml(name)}</span><span>₹${formatInt(amt)}</span><span class="badge-pill">${badge}</span>`;
+    li.innerHTML = `<span>${escapeHtml(name)}</span><span>₹${formatInt(amt)}</span><span class="badge-pill ${badge.class}">${badge.name}</span>`;
     listEl.appendChild(li);
   });
+  if(legendEl) legendEl.style.display = "grid";
 }
 
 function showLiveFeed(receipt){
@@ -2451,6 +2553,7 @@ function init(){
   window.renderMyReceipts = renderMyReceipts;
 
   setupSmartHelp();
+  setupRandomDonations();
 
   // Hide page loader after everything is ready
   const loader = $("#pageLoader");
@@ -2470,6 +2573,69 @@ function init(){
 }
 
 init();
+
+function setupRandomDonations(){
+  // Demo mode: random donation popups every 8-15 seconds (only when tab is visible)
+  let randomDonationInterval = null;
+  const demoNames = ["Anonymous Supporter", "Community Member", "Local Hero", "Kind Donor", "Generous Giver", "Friend of Foundation"];
+  const demoAmounts = [100, 100, 100, 250, 250, 500, 500, 1000];
+  
+  const generateRandomDonation = () => {
+    if(document.hidden) return;
+    const name = demoNames[Math.floor(Math.random() * demoNames.length)];
+    const amount = demoAmounts[Math.floor(Math.random() * demoAmounts.length)];
+    const methods = ["UPI", "Card"];
+    const method = methods[Math.floor(Math.random() * methods.length)];
+    
+    const fakeReceipt = {
+      name,
+      email: "demo@example.com",
+      amount,
+      method,
+      ref: method === "UPI" ? `UPI: ${UPI_ID}` : "•••• 1234",
+      ts: Date.now(),
+      receiptNo: `EGHF-DEMO-${Math.random().toString(36).slice(2, 6).toUpperCase()}`,
+      note: "Demo donation",
+    };
+    
+    // Show in live feed
+    if(typeof showLiveFeed === "function") showLiveFeed(fakeReceipt);
+    
+    // Optionally add to donor list (uncomment if you want it in admin too)
+    // addDonor(fakeReceipt);
+    // setRaised(getRaised() + amount);
+    // renderAchievements();
+  };
+  
+  const startRandomDonations = () => {
+    if(randomDonationInterval) return;
+    const scheduleNext = () => {
+      const delay = 8000 + Math.random() * 7000;
+      randomDonationInterval = setTimeout(() => {
+        generateRandomDonation();
+        scheduleNext();
+      }, delay);
+    };
+    scheduleNext();
+  };
+  
+  // Start after 5 seconds, only if tab is visible
+  setTimeout(() => {
+    if(!document.hidden) startRandomDonations();
+  }, 5000);
+  
+  // Pause/resume based on visibility
+  document.addEventListener("visibilitychange", () => {
+    if(document.hidden){
+      if(randomDonationInterval){
+        clearTimeout(randomDonationInterval);
+        randomDonationInterval = null;
+      }
+    }else{
+      if(!randomDonationInterval) startRandomDonations();
+    }
+  });
+}
 
 function setupSmartHelp(){
   const panel = $("#aiPanel");
