@@ -2410,6 +2410,8 @@ function setupSmartHelp(){
 
   if(!panel || !fab || !close || !msgs || !actions || !input || !send) return;
 
+  let typingEl = null;
+
   const quick = [
     { id:"donate", label:"Donate help", text:"How do I donate?", intent:"donate" },
     { id:"upi", label:"UPI QR", text:"Show UPI payment steps", intent:"upi" },
@@ -2419,10 +2421,23 @@ function setupSmartHelp(){
   ];
 
   function addBubble(text, who="bot"){
+    if(typingEl && who === "bot"){
+      typingEl.remove();
+      typingEl = null;
+    }
     const div = document.createElement("div");
     div.className = `ai-bubble ${who === "user" ? "user" : ""}`.trim();
     div.innerHTML = text;
     msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function showTyping(){
+    if(typingEl) return;
+    typingEl = document.createElement("div");
+    typingEl.className = "ai-bubble";
+    typingEl.innerHTML = `<span class="muted" style="font-size:12px;">Assistant is typing…</span>`;
+    msgs.appendChild(typingEl);
     msgs.scrollTop = msgs.scrollHeight;
   }
 
@@ -2493,26 +2508,30 @@ function setupSmartHelp(){
     addBubble(escapeHtml(q), "user");
     input.value = "";
 
-    const intent = detectIntent(q);
-    if(intent === "admin"){
-      addBubble(`Admin access is in the top bar under <strong>Admin</strong>. Use the password to unlock the dashboard.`);
-      return;
-    }
-    const r = replyFor(intent);
-    if(r){
-      addBubble(r);
-      return;
-    }
+    showTyping();
 
-    // Lightweight offline Q&A / routing
-    addBubble(
-      `I can help with donations, UPI/card payments, receipts, volunteering, or customer care.<br>
-      Try one of these:<div class="ai-actions" style="margin-top:8px;">
-      <button class="ai-chip" type="button" onclick="location.hash='#donate'">Donate</button>
-      <button class="ai-chip" type="button" onclick="location.hash='#volunteer'">Volunteer</button>
-      <button class="ai-chip" type="button" onclick="location.hash='#contact'">Contact</button>
-      </div>`
-    );
+    setTimeout(() => {
+      const intent = detectIntent(q);
+      if(intent === "admin"){
+        addBubble(`Admin access is in the top bar under <strong>Admin</strong>. Use the password to unlock the dashboard.`);
+        return;
+      }
+      const r = replyFor(intent);
+      if(r){
+        addBubble(r);
+        return;
+      }
+
+      // Lightweight offline Q&A / routing, a bit smarter on wording.
+      addBubble(
+        `I can help with donations, UPI/card payments, receipts, volunteering, or customer care.<br>
+        Try one of these:<div class="ai-actions" style="margin-top:8px;">
+        <button class="ai-chip" type="button" onclick="location.hash='#donate'">Go to Donate</button>
+        <button class="ai-chip" type="button" onclick="location.hash='#volunteer'">Go to Volunteer</button>
+        <button class="ai-chip" type="button" onclick="location.hash='#contact'">Contact customer care</button>
+        </div>`
+      );
+    }, 380);
   }
 
   fab.addEventListener("click", open);
