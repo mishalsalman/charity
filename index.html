@@ -3,237 +3,1400 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HopeHands Foundation</title>
+<title>The Elite Global Humanity Foundation | Built on Trust</title>
+<meta name="description" content="The Elite Global Humanity Foundation delivers transparent global impact through clean water, health, and education. Donate, volunteer, and track impact (demo).">
+<meta name="theme-color" content="#2c7a7b">
+<meta property="og:title" content="The Elite Global Humanity Foundation">
+<meta property="og:description" content="Clean water projects that change lives.">
+<meta property="og:type" content="website">
 
 <style>
-:root {
-  --primary:#2c7a7b;
-  --accent:#38b2ac;
-  --bg:#f4f9f9;
-  --text:#333;
+:root{
+  --primary: #2c7a7b;
+  --primary-2: #1f5e5f;
+  --accent: #38b2ac;
+  --accent-2: #63e6e2;
+  --bg: #f6fbfb;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --muted: #475569;
+  --border: rgba(15, 23, 42, 0.12);
+  --shadow: 0 16px 40px rgba(2, 8, 23, 0.14);
+  --ring: rgba(56, 178, 172, 0.35);
+  --radius: 16px;
+  --radius-sm: 12px;
+  --max: 1100px;
 }
-body.dark { --bg:#121212; --text:#eee; }
+body.dark{
+  --bg:#0b1220;
+  --surface:#0f1a2e;
+  --text:#eef2ff;
+  --muted:#b8c2d8;
+  --border: rgba(226, 232, 240, 0.14);
+  --shadow: 0 18px 48px rgba(0,0,0,0.45);
+  --ring: rgba(99, 230, 226, 0.25);
+}
 
-body {
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
   margin:0;
-  font-family:Arial, sans-serif;
-  background:var(--bg);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  background: radial-gradient(900px 520px at 10% 0%, rgba(56,178,172,0.14), transparent 55%),
+              radial-gradient(720px 480px at 90% 10%, rgba(44,122,123,0.16), transparent 60%),
+              var(--bg);
   color:var(--text);
-  transition:0.4s;
-  scroll-behavior:smooth;
+  transition: background 220ms ease, color 220ms ease;
 }
+a{ color:inherit; }
+img{ max-width:100%; display:block; }
+button, input, select, textarea{ font:inherit; }
 
-header {
-  background:var(--primary);
-  color:white;
-  padding:15px;
-  text-align:center;
-  position:sticky;
-  top:0;
+.container{ width:min(var(--max), calc(100% - 40px)); margin-inline:auto; }
+.skip-link{
+  position:absolute; left:-999px; top:8px;
+  background:var(--surface); color:var(--text);
+  border:1px solid var(--border);
+  padding:10px 12px; border-radius:999px; z-index:9999;
 }
+.skip-link:focus{ left:12px; outline:3px solid var(--ring); }
 
-header img {
-  height:60px;
-  display:block;
-  margin:auto;
+header{
+  position:sticky; top:0; z-index:50;
+  backdrop-filter: blur(10px);
+  background: color-mix(in srgb, var(--surface) 84%, transparent);
+  border-bottom:1px solid var(--border);
 }
+.header-inner{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 0;
+}
+.brand{
+  display:flex; gap:12px; align-items:center; text-decoration:none;
+}
+.brand img{ width:44px; height:44px; border-radius:12px; }
+.brand .name{ line-height:1.1; }
+.brand .name strong{ display:block; font-size:15px; letter-spacing:0.2px; }
+.brand .name span{ display:block; font-size:12px; color:var(--muted); }
 
-nav a {
-  color:white;
-  margin:0 12px;
+nav{ display:flex; gap:10px; align-items:center; }
+nav a{
   text-decoration:none;
-  font-weight:bold;
+  padding:10px 12px;
+  border-radius:999px;
+  color:var(--muted);
+  font-weight:700;
+  font-size:14px;
 }
+nav a:hover{ background: color-mix(in srgb, var(--accent) 12%, transparent); color:var(--text); }
+nav a[aria-current="page"]{ color:var(--text); background: color-mix(in srgb, var(--accent) 18%, transparent); }
 
-.toggle-btn {
-  position:absolute;
-  right:15px;
-  top:15px;
-  background:white;
-  border:none;
-  padding:5px 10px;
+.toolbar{ display:flex; gap:10px; align-items:center; }
+.user-chip{
+  display:inline-flex; align-items:center; gap:10px;
+  height:40px; padding:0 12px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  font-weight:900;
+}
+.avatar{
+  height:26px; width:26px; border-radius:999px;
+  display:inline-flex; align-items:center; justify-content:center;
+  background: linear-gradient(135deg, var(--accent), var(--primary));
+  color:white;
+  font-size:12px;
+  letter-spacing:0.3px;
+}
+.user-chip .muted{ font-size:12px; font-weight:800; }
+.icon-btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  height:40px; width:40px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
   cursor:pointer;
-  border-radius:5px;
 }
-
-section {
-  padding:60px 20px;
-  text-align:center;
-  animation:fadeIn 1s ease;
-}
-
-@keyframes fadeIn {
-  from{opacity:0; transform:translateY(20px);}
-  to{opacity:1; transform:translateY(0);}
-}
-
-.hero {
-  background:url('https://images.unsplash.com/photo-1509099836639-18ba1795216d') center/cover;
+.icon-btn:focus-visible{ outline:3px solid var(--ring); outline-offset:2px; }
+.primary-btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  gap:8px;
+  height:40px;
+  padding:0 14px;
+  border-radius:999px;
+  border:1px solid color-mix(in srgb, var(--accent) 30%, var(--border));
+  background: linear-gradient(135deg, var(--accent), var(--primary));
   color:white;
-  padding:120px 20px;
-}
-
-.btn {
-  background:var(--accent);
-  color:white;
-  padding:12px 25px;
-  border:none;
-  border-radius:5px;
   cursor:pointer;
-  font-size:16px;
+  font-weight:800;
+  text-decoration:none;
+  box-shadow: 0 10px 22px rgba(44,122,123,0.25);
+}
+.primary-btn:hover{ filter:saturate(1.05) brightness(1.02); }
+.primary-btn:focus-visible{ outline:3px solid var(--ring); outline-offset:2px; }
+
+.mobile-toggle{ display:none; }
+
+main{ padding-bottom: 40px; }
+section{ padding:72px 0; }
+.section-title{ font-size: clamp(22px, 2.1vw, 30px); margin:0 0 10px; letter-spacing:-0.02em; }
+.section-sub{ margin:0 auto 24px; max-width:70ch; color:var(--muted); }
+
+.hero{
+  padding:72px 0 44px;
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap:24px;
+  align-items:center;
+}
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 12px;
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  border-radius:999px;
+  color:var(--muted);
+  font-weight:700;
+  font-size:13px;
+}
+.hero h1{
+  margin:14px 0 12px;
+  font-size: clamp(34px, 4vw, 52px);
+  letter-spacing:-0.04em;
+  line-height:1.05;
+}
+.hero p{
+  margin:0 0 18px;
+  color:var(--muted);
+  max-width: 62ch;
+  font-size: 16px;
+}
+.hero-actions{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+.ghost-btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  height:40px; padding:0 14px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  cursor:pointer;
+  font-weight:800;
+  text-decoration:none;
+}
+.ghost-btn:hover{ background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.hero-card{
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+}
+.hero-card .cover{
+  aspect-ratio: 4 / 3;
+  background:
+    linear-gradient(135deg, rgba(44,122,123,0.25), rgba(56,178,172,0.22)),
+    url('https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=1200&q=60') center/cover;
+}
+.hero-card .body{ padding:16px; }
+.mini{
+  display:flex; gap:12px; justify-content:space-between; align-items:flex-end; flex-wrap:wrap;
+}
+.mini .kpi strong{ font-size:22px; display:block; }
+.mini .kpi span{ color:var(--muted); font-size:12px; font-weight:700; }
+.progress{
+  margin-top:14px;
+  height:10px;
+  border-radius:999px;
+  background: color-mix(in srgb, var(--primary) 10%, var(--border));
+  overflow:hidden;
+}
+.progress > div{
+  height:100%;
+  width:0%;
+  border-radius:999px;
+  background: linear-gradient(90deg, var(--accent), var(--primary));
+  transition: width 600ms ease;
 }
 
-.cards {
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:20px;
+.grid-3{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:14px;
+}
+.card{
+  text-align:left;
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  border-radius: var(--radius);
+  padding:16px;
+  box-shadow: 0 12px 24px rgba(2,8,23,0.08);
+}
+.card h3{ margin:0 0 6px; font-size:16px; letter-spacing:-0.01em; }
+.card p{ margin:0; color:var(--muted); font-size:14px; line-height:1.5; }
+.pill{
+  display:inline-flex; align-items:center; gap:8px;
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  padding:6px 10px;
+  border-radius:999px;
+  font-weight:800;
+  font-size:12px;
+  color: color-mix(in srgb, var(--text) 75%, var(--primary));
+  margin-bottom:10px;
 }
 
-.gallery img {
-  width:250px;
-  height:170px;
-  object-fit:cover;
-  border-radius:8px;
+.stats{
+  display:grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap:18px;
+  align-items:stretch;
 }
-
-form { max-width:400px; margin:auto; text-align:left; }
-
-input, select, textarea {
-  width:100%;
-  padding:10px;
-  margin:8px 0;
-  border-radius:5px;
-  border:1px solid #ccc;
-}
-
-footer {
-  background:var(--primary);
-  color:white;
+.stat-big{
+  border:1px solid var(--border);
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--surface) 92%, transparent),
+    color-mix(in srgb, var(--accent) 10%, transparent)
+  );
+  border-radius: var(--radius);
   padding:20px;
-  text-align:center;
+  box-shadow: var(--shadow);
 }
+.counter{
+  font-size: clamp(34px, 3.5vw, 56px);
+  letter-spacing:-0.04em;
+  font-weight: 900;
+  line-height:1;
+  margin: 0 0 10px;
+}
+.muted{ color:var(--muted); }
+.stat-list{
+  display:grid;
+  gap:12px;
+}
+.stat-item strong{ display:block; font-size:18px; }
+.stat-item span{ color:var(--muted); font-size:13px; font-weight:700; }
 
-.counter {
-  font-size:36px;
-  color:var(--accent);
-  font-weight:bold;
+.split{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:18px;
+  align-items:start;
 }
+form{
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  border-radius: var(--radius);
+  padding:16px;
+  box-shadow: 0 12px 24px rgba(2,8,23,0.10);
+}
+label{ display:block; font-weight:800; font-size:12px; color:var(--muted); margin-top:12px; }
+input, select, textarea{
+  width:100%;
+  padding:12px 12px;
+  margin-top:6px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 96%, transparent);
+  color: var(--text);
+}
+input:focus, select:focus, textarea:focus{ outline:3px solid var(--ring); border-color: transparent; }
+.form-row{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:10px;
+}
+.form-actions{ margin-top:12px; display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.hint{ font-size:12px; color:var(--muted); margin:10px 0 0; }
+.success{
+  margin:10px 0 0;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid color-mix(in srgb, var(--accent) 25%, var(--border));
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  font-weight:800;
+  display:none;
+}
+.success.show{ display:block; }
 
-#donorList li {
-  list-style:none;
-  background:white;
-  margin:5px;
-  padding:8px;
-  border-radius:5px;
+.gallery{
+  display:grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap:12px;
 }
-body.dark #donorList li { background:#1e1e1e; }
+.shot{
+  border-radius: var(--radius);
+  overflow:hidden;
+  border:1px solid var(--border);
+  box-shadow: 0 16px 36px rgba(2,8,23,0.12);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+}
+.shot img{ width:100%; height:100%; object-fit:cover; }
+.shot.big{ grid-column: span 6; aspect-ratio: 16 / 10; }
+.shot.small{ grid-column: span 3; aspect-ratio: 1 / 1; }
+
+.accordion{
+  border:1px solid var(--border);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  overflow:hidden;
+}
+.accordion details{ border-bottom:1px solid var(--border); padding:14px 16px; }
+.accordion details:last-child{ border-bottom:none; }
+.accordion summary{
+  cursor:pointer;
+  font-weight:900;
+  letter-spacing:-0.01em;
+}
+.accordion p{ margin:10px 0 0; color:var(--muted); }
 
 #adminPanel { display:none; }
+#donorList{ padding:0; margin:10px 0 0; }
+#donorList li{
+  list-style:none;
+  margin:10px 0 0;
+  padding:12px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+}
+.row-between{ display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+.danger{
+  border:1px solid color-mix(in srgb, #ef4444 35%, var(--border));
+  background: color-mix(in srgb, #ef4444 10%, transparent);
+  color: color-mix(in srgb, var(--text) 70%, #ef4444);
+}
+
+footer{
+  border-top:1px solid var(--border);
+  padding:28px 0;
+  color:var(--muted);
+}
+.footer-grid{
+  display:grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap:16px;
+  align-items:start;
+}
+.footer-grid strong{ color:var(--text); }
+.footer-links{ display:flex; flex-wrap:wrap; gap:10px; justify-content:flex-end; }
+.footer-links a{ color:var(--muted); text-decoration:none; font-weight:800; font-size:13px; }
+.footer-links a:hover{ color:var(--text); }
+
+.reveal{ opacity:0; transform: translateY(12px); transition: opacity 500ms ease, transform 500ms ease; }
+.reveal.show{ opacity:1; transform: translateY(0); }
+
+dialog{
+  border:none;
+  border-radius: var(--radius);
+  padding:0;
+  width:min(560px, calc(100% - 24px));
+  box-shadow: var(--shadow);
+  background: var(--surface);
+  color: var(--text);
+}
+dialog::backdrop{ background: rgba(2,8,23,0.55); }
+.modal-head{
+  padding:14px 16px;
+  display:flex; align-items:center; justify-content:space-between;
+  border-bottom:1px solid var(--border);
+}
+.modal-body{ padding:16px; }
+.close-btn{ width:40px; height:40px; }
+
+.toast{
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  max-width: 360px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  box-shadow: var(--shadow);
+  color: var(--text);
+  display:none;
+}
+.toast.show{ display:block; }
+
+@media (max-width: 860px){
+  .hero-grid{ grid-template-columns: 1fr; }
+  .stats{ grid-template-columns: 1fr; }
+  .grid-3{ grid-template-columns: 1fr; }
+  .split{ grid-template-columns: 1fr; }
+  .shot.big{ grid-column: span 12; }
+  .shot.small{ grid-column: span 6; }
+  .footer-grid{ grid-template-columns: 1fr; }
+  .footer-links{ justify-content:flex-start; }
+  nav{
+    display:none;
+    position:absolute;
+    left:0; right:0;
+    top:64px;
+    padding:12px 0 14px;
+    background: color-mix(in srgb, var(--surface) 96%, transparent);
+    border-bottom:1px solid var(--border);
+  }
+  nav.open{ display:flex; flex-direction:column; align-items:flex-start; gap:6px; }
+  nav a{ width:100%; }
+  .mobile-toggle{ display:inline-flex; }
+}
 </style>
 </head>
 
 <body>
 
+<a class="skip-link" href="#main">Skip to content</a>
+
 <header>
-  <img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" alt="NGO Logo">
-  <h1>HopeHands Foundation</h1>
-  <button class="toggle-btn" onclick="toggleDark()">🌙</button>
-  <nav>
-    <a href="#about">About</a>
-    <a href="#donate">Donate</a>
-    <a href="#gallery">Impact</a>
-    <a href="#admin" onclick="showAdmin()">Admin</a>
-  </nav>
+  <div class="container header-inner">
+    <a class="brand" href="#top" aria-label="The Elite Global Humanity Foundation home">
+      <img src="assets/logo.png" alt="The Elite Global Humanity Foundation logo">
+      <div class="name">
+        <strong>The Elite Global Humanity Foundation</strong>
+        <span>Built on trust • Transparent global impact</span>
+      </div>
+    </a>
+
+    <nav id="siteNav" aria-label="Primary navigation">
+      <a href="#about">About</a>
+      <a href="#programs">Programs</a>
+      <a href="#impact">Impact</a>
+      <a href="#events">Events</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#faq">FAQ</a>
+      <a href="#admin" id="adminLink">Admin</a>
+    </nav>
+
+    <div class="toolbar">
+      <button class="icon-btn mobile-toggle" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle dark mode">🌙</button>
+      <button class="ghost-btn" id="userBtn" type="button">Account</button>
+      <button class="ghost-btn" id="loginBtn" type="button">Admin</button>
+      <a class="primary-btn" href="#donate">Donate</a>
+    </div>
+  </div>
 </header>
 
-<section class="hero">
-  <h1>Clean Water for Every Child</h1>
-  <p>Inspired by global charities bringing safe water to Africa</p>
-  <button class="btn" onclick="document.getElementById('donate').scrollIntoView()">Donate Now</button>
-</section>
+<main id="main">
+  <section class="hero" id="top">
+    <div class="container hero-grid">
+      <div class="reveal show">
+        <div class="eyebrow">Built on trust • Transparent global impact</div>
+        <h1>Delivering transparent global impact.</h1>
+        <p>
+          The Elite Global Humanity Foundation is a school exhibition demo website inspired by real-world NGOs.
+          We focus on clean water, health, and education—because sustainable change starts with basics done well.
+        </p>
+        <div class="hero-actions">
+          <button class="primary-btn" type="button" id="openDonate">Donate in 20 seconds</button>
+          <a class="ghost-btn" href="#volunteer">Volunteer</a>
+          <a class="ghost-btn" href="#impact">See impact</a>
+        </div>
+        <p class="hint">Tip: try dark mode, then donate — your donation appears in Admin.</p>
+      </div>
 
-<section id="about">
-  <h2>About Our Mission</h2>
-  <p>HopeHands Foundation is inspired by organizations like charity: water and UNICEF. We focus on providing clean drinking water to African communities where children walk miles daily just to find water.</p>
-</section>
+      <aside class="hero-card reveal show" aria-label="Impact snapshot">
+        <div class="cover" role="img" aria-label="Water project in action"></div>
+        <div class="body">
+          <div class="mini">
+            <div class="kpi">
+              <strong id="kpiPeople">0</strong>
+              <span>people reached</span>
+            </div>
+            <div class="kpi">
+              <strong id="kpiWells">0</strong>
+              <span>wells supported</span>
+            </div>
+            <div class="kpi">
+              <strong id="kpiSchools">0</strong>
+              <span>schools trained</span>
+            </div>
+          </div>
+          <div class="progress" aria-label="Goal progress">
+            <div id="goalBar"></div>
+          </div>
+          <p class="hint"><strong>Goal:</strong> <span id="goalText">Funding goal loading…</span></p>
+        </div>
+      </aside>
+    </div>
+  </section>
 
-<section>
-  <h2>People Helped With Water Access</h2>
-  <div class="counter" id="meals">0</div>
-</section>
+  <section id="about" class="reveal">
+    <div class="container">
+      <h2 class="section-title">About our mission</h2>
+      <p class="section-sub">
+        In many communities, children spend hours collecting water that may not be safe.
+        Our mission is simple: <strong>bring clean water closer</strong>, teach safe storage, and support long-term maintenance.
+      </p>
+      <div class="grid-3">
+        <div class="card">
+          <div class="pill">✅ Transparency</div>
+          <h3>Track where funds go</h3>
+          <p>For this demo: every “donation” adds to the public progress bar and the Admin donor list.</p>
+        </div>
+        <div class="card">
+          <div class="pill">🛠️ Sustainability</div>
+          <h3>Local maintenance</h3>
+          <p>We train community members to maintain pumps and keep systems running year-round.</p>
+        </div>
+        <div class="card">
+          <div class="pill">🎓 Education</div>
+          <h3>Hygiene & safety</h3>
+          <p>Clean water works best with handwashing, safe storage, and school-based training.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section id="donate">
-  <h2>Support Clean Water Projects</h2>
-  <form onsubmit="processDonation(event)">
-    <input type="text" id="donorName" placeholder="Your Name" required>
-    <input type="email" placeholder="Your Email" required>
-    <select id="donationAmount" required>
-      <option value="">Select Amount</option>
-      <option value="100">₹100</option>
-      <option value="500">₹500</option>
-      <option value="1000">₹1000</option>
-    </select>
-    <button class="btn">Proceed to Payment</button>
-  </form>
-  <p id="donationMessage"></p>
-</section>
+  <section id="programs" class="reveal">
+    <div class="container">
+      <h2 class="section-title">What we do</h2>
+      <p class="section-sub">A few of our core programs that you can highlight in your exhibition.</p>
+      <div class="grid-3">
+        <div class="card">
+          <div class="pill">⛲ Wells</div>
+          <h3>Water points & hand pumps</h3>
+          <p>New wells where they are needed most, with training and spare parts planning.</p>
+        </div>
+        <div class="card">
+          <div class="pill">🧪 Filtration</div>
+          <h3>Safe water at home</h3>
+          <p>Low-cost filters and education to reduce waterborne disease at household level.</p>
+        </div>
+        <div class="card">
+          <div class="pill">🏫 Schools</div>
+          <h3>School WASH</h3>
+          <p>Handwashing stations, toilets, and hygiene lessons so students stay healthy and in class.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section id="gallery">
-  <h2>Water Projects in Action</h2>
-  <div class="cards gallery">
-    <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e">
-    <img src="https://images.unsplash.com/photo-1542810634-71277d95dcbb">
-    <img src="https://images.unsplash.com/photo-1524499982521-1ffd58dd89ea">
-    <img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d">
+  <section id="impact" class="reveal">
+    <div class="container">
+      <h2 class="section-title">Impact you can see</h2>
+      <p class="section-sub">These numbers animate when they enter the screen.</p>
+
+      <div class="stats">
+        <div class="stat-big">
+          <p class="muted" style="margin:0 0 10px; font-weight:800;">People helped with water access</p>
+          <div class="counter" id="peopleCounter" aria-live="polite">0</div>
+          <p class="muted" style="margin:0;">Every 1 water point can serve a whole community for years.</p>
+        </div>
+
+        <div class="stat-list">
+          <div class="card stat-item">
+            <strong id="statHours">0</strong>
+            <span>hours saved per day (less walking for water)</span>
+          </div>
+          <div class="card stat-item">
+            <strong id="statKids">0</strong>
+            <span>students supported in school hygiene programs</span>
+          </div>
+          <div class="card stat-item">
+            <strong id="statVillages">0</strong>
+            <span>villages connected to clean water systems</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="donate" class="reveal">
+    <div class="container">
+      <h2 class="section-title">Donate (demo)</h2>
+      <p class="section-sub">
+        This is a school exhibition demo — it simulates a “secure checkout” and then records donors locally in your browser.
+      </p>
+
+      <div class="split">
+        <form id="donateForm">
+          <div class="row-between">
+            <strong>Donation details</strong>
+            <span class="pill">🔒 Secure demo</span>
+          </div>
+
+          <label for="donorName">Your name</label>
+          <input type="text" id="donorName" placeholder="e.g., Mishal" required autocomplete="name">
+
+          <div class="form-row">
+            <div>
+              <label for="donorEmail">Email</label>
+              <input type="email" id="donorEmail" placeholder="you@example.com" required autocomplete="email">
+            </div>
+            <div>
+              <label for="donationAmount">Amount</label>
+              <select id="donationAmount" required>
+                <option value="">Select</option>
+                <option value="100">₹100</option>
+                <option value="250">₹250</option>
+                <option value="500">₹500</option>
+                <option value="1000">₹1000</option>
+                <option value="2000">₹2000</option>
+              </select>
+            </div>
+          </div>
+
+          <label for="donationNote">Message (optional)</label>
+          <textarea id="donationNote" rows="3" placeholder="A short message…"></textarea>
+
+          <div class="form-actions">
+            <button class="primary-btn" type="submit">Proceed to payment</button>
+            <button class="ghost-btn" type="button" id="quickDonate500">Quick ₹500</button>
+          </div>
+
+          <p class="success" id="donationMessage"></p>
+          <p class="hint">Admin password in this demo: <strong>admin123</strong>.</p>
+        </form>
+
+        <div class="card">
+          <div class="row-between">
+            <strong>Where your donation goes</strong>
+            <span class="pill">📍 Project Wells</span>
+          </div>
+          <p class="muted" style="margin-top:10px;">
+            Your donation supports drilling, pump parts, training, and long-term maintenance.
+            For exhibition storytelling, tell visitors: <strong>“clean water saves time, improves health, and keeps kids in school.”</strong>
+          </p>
+          <div class="progress" style="margin-top:14px;">
+            <div id="donationBar"></div>
+          </div>
+          <p class="hint"><strong>Live progress:</strong> increases after each donation on this device.</p>
+          <div class="grid-3" style="margin-top:14px;">
+            <div class="card" style="box-shadow:none;">
+              <h3 style="margin:0 0 6px;">₹100</h3>
+              <p>helps provide water testing supplies.</p>
+            </div>
+            <div class="card" style="box-shadow:none;">
+              <h3 style="margin:0 0 6px;">₹500</h3>
+              <p>supports hygiene kits for students.</p>
+            </div>
+            <div class="card" style="box-shadow:none;">
+              <h3 style="margin:0 0 6px;">₹1000</h3>
+              <p>contributes to spare parts & repairs.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="volunteer" class="reveal">
+    <div class="container">
+      <h2 class="section-title">Volunteer</h2>
+      <p class="section-sub">Collect volunteer signups for your exhibition visitors (stored locally on the device).</p>
+      <div class="split">
+        <form id="volunteerForm">
+          <strong>Sign up</strong>
+          <label for="volName">Full name</label>
+          <input id="volName" required placeholder="Your name">
+
+          <div class="form-row">
+            <div>
+              <label for="volPhone">Phone</label>
+              <input id="volPhone" inputmode="tel" placeholder="Optional">
+            </div>
+            <div>
+              <label for="volRole">Interest</label>
+              <select id="volRole" required>
+                <option value="">Select</option>
+                <option>Fundraising</option>
+                <option>Social media</option>
+                <option>Event support</option>
+                <option>Teaching & awareness</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="primary-btn" type="submit">Join as volunteer</button>
+          </div>
+          <p class="success" id="volMessage"></p>
+        </form>
+
+        <div class="card">
+          <strong>What volunteers do</strong>
+          <p class="muted" style="margin-top:10px;">
+            Volunteers help run events, spread awareness, and raise funds. In a real NGO, they also support field teams with logistics and training.
+          </p>
+          <div class="grid-3" style="margin-top:12px;">
+            <div class="card" style="box-shadow:none;">
+              <div class="pill">📣</div>
+              <h3 style="margin:0 0 6px;">Awareness</h3>
+              <p>Talks, posters, and campaigns.</p>
+            </div>
+            <div class="card" style="box-shadow:none;">
+              <div class="pill">🎪</div>
+              <h3 style="margin:0 0 6px;">Events</h3>
+              <p>School drives and donation booths.</p>
+            </div>
+            <div class="card" style="box-shadow:none;">
+              <div class="pill">🤝</div>
+              <h3 style="margin:0 0 6px;">Community</h3>
+              <p>Support local partnerships.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="events" class="reveal">
+    <div class="container">
+      <h2 class="section-title">Upcoming events</h2>
+      <p class="section-sub">Make your exhibition page feel “alive” with a simple events schedule.</p>
+      <div class="grid-3">
+        <div class="card">
+          <div class="pill">📅 This week</div>
+          <h3>Water Walk Awareness</h3>
+          <p>Students walk with water jars to understand daily challenges and share stories.</p>
+        </div>
+        <div class="card">
+          <div class="pill">🎤 Next month</div>
+          <h3>Guest talk: Health & Hygiene</h3>
+          <p>Short talk on waterborne disease prevention and handwashing habits.</p>
+        </div>
+        <div class="card">
+          <div class="pill">🏃 Fundraiser</div>
+          <h3>Run for Water</h3>
+          <p>Community run + donation pledge. Track progress in the donate section.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery" class="reveal">
+    <div class="container">
+      <h2 class="section-title">Gallery</h2>
+      <p class="section-sub">Real photos (from Unsplash) to make the site feel authentic.</p>
+      <div class="gallery" aria-label="Water projects photo gallery">
+        <figure class="shot big">
+          <img loading="lazy" alt="Community water project" src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=1400&q=60">
+        </figure>
+        <figure class="shot small">
+          <img loading="lazy" alt="Volunteer helping" src="https://images.unsplash.com/photo-1542810634-71277d95dcbb?auto=format&fit=crop&w=900&q=60">
+        </figure>
+        <figure class="shot small">
+          <img loading="lazy" alt="Children at school" src="https://images.unsplash.com/photo-1524499982521-1ffd58dd89ea?auto=format&fit=crop&w=900&q=60">
+        </figure>
+        <figure class="shot small">
+          <img loading="lazy" alt="Smiling people" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=900&q=60">
+        </figure>
+        <figure class="shot small">
+          <img loading="lazy" alt="Hands holding water" src="https://images.unsplash.com/photo-1520975958225-4f2041bd4be1?auto=format&fit=crop&w=900&q=60">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="reveal">
+    <div class="container">
+      <h2 class="section-title">FAQ</h2>
+      <p class="section-sub">Short answers visitors usually ask at an exhibition booth.</p>
+      <div class="accordion">
+        <details>
+          <summary>Is this website real?</summary>
+          <p>This is a school exhibition demo. The donation flow is simulated and stored locally in your browser for demonstration.</p>
+        </details>
+        <details>
+          <summary>How do you make sure projects last?</summary>
+          <p>By training local maintenance teams, planning spare parts, and doing periodic checkups and repairs.</p>
+        </details>
+        <details>
+          <summary>Why focus on clean water?</summary>
+          <p>Clean water reduces disease, saves time (especially for children), and helps students attend school regularly.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section id="admin" class="reveal">
+    <div class="container">
+      <h2 class="section-title">Admin dashboard</h2>
+      <p class="section-sub">Password-protected for the demo. Shows donors and volunteers stored on this device.</p>
+
+      <div class="row-between">
+        <button class="ghost-btn" type="button" id="adminBtn">Unlock admin</button>
+        <button class="ghost-btn danger" type="button" id="resetBtn">Reset demo data</button>
+      </div>
+
+      <div id="adminPanel">
+        <div class="split" style="margin-top:12px;">
+          <div class="card">
+            <div class="row-between">
+              <strong>Donor list</strong>
+              <span class="pill" id="donorCount">0 donors</span>
+            </div>
+            <ul id="donorList" aria-label="Donor list"></ul>
+          </div>
+
+          <div class="card">
+            <div class="row-between">
+              <strong>Volunteers</strong>
+              <span class="pill" id="volCount">0 volunteers</span>
+            </div>
+            <ul id="volList" aria-label="Volunteer list" style="padding:0; margin:10px 0 0;"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <strong>The Elite Global Humanity Foundation</strong>
+        <div class="muted" style="margin-top:6px;">© 2026 • Built on Trust</div>
+        <div class="muted" style="margin-top:8px; font-size:13px;">
+          Exhibition demo site. Images via Unsplash. Donations are simulated.
+        </div>
+      </div>
+      <div class="footer-links" aria-label="Footer links">
+        <a href="#top">Top</a>
+        <a href="#donate">Donate</a>
+        <a href="#volunteer">Volunteer</a>
+        <a href="#faq">FAQ</a>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<dialog id="donateModal" aria-label="Donation modal">
+  <div class="modal-head">
+    <strong>Fast donate</strong>
+    <button class="icon-btn close-btn" type="button" id="closeDonate" aria-label="Close">✕</button>
   </div>
-</section>
-
-<section id="admin">
-  <h2>Admin Dashboard</h2>
-  <div id="adminPanel">
-    <h3>Donor List</h3>
-    <ul id="donorList"></ul>
+  <div class="modal-body">
+    <p class="muted" style="margin-top:0;">Pick an amount and we’ll simulate a secure payment.</p>
+    <div class="form-actions" style="margin-top:0;">
+      <button class="ghost-btn" type="button" data-amt="100">₹100</button>
+      <button class="ghost-btn" type="button" data-amt="500">₹500</button>
+      <button class="ghost-btn" type="button" data-amt="1000">₹1000</button>
+      <button class="primary-btn" type="button" data-amt="2000">₹2000</button>
+    </div>
+    <p class="hint">This uses your name/email from the form if filled.</p>
   </div>
-</section>
+</dialog>
 
-<footer>
-  <p>© 2026 HopeHands Foundation | Clean Water Changes Lives</p>
-</footer>
+<dialog id="loginModal" aria-label="Login modal">
+  <div class="modal-head">
+    <strong>Login</strong>
+    <button class="icon-btn close-btn" type="button" id="closeLogin" aria-label="Close">✕</button>
+  </div>
+  <div class="modal-body">
+    <p class="muted" style="margin-top:0;">For this demo, login unlocks the Admin dashboard (donors + volunteers).</p>
+    <form id="loginForm">
+      <label for="loginPass">Admin password</label>
+      <input id="loginPass" type="password" required placeholder="Enter password" autocomplete="current-password">
+      <div class="form-actions">
+        <button class="primary-btn" type="submit">Unlock admin</button>
+        <button class="ghost-btn" type="button" id="loginCancel">Cancel</button>
+      </div>
+      <p class="hint">Demo password: <strong>admin123</strong></p>
+    </form>
+  </div>
+</dialog>
+
+<dialog id="userModal" aria-label="Account modal">
+  <div class="modal-head">
+    <strong>Account</strong>
+    <button class="icon-btn close-btn" type="button" id="closeUser" aria-label="Close">✕</button>
+  </div>
+  <div class="modal-body">
+    <p class="muted" style="margin-top:0;">Create a free demo account (saved locally) so donation and volunteer forms auto-fill.</p>
+    <div class="split" style="grid-template-columns: 1fr 1fr; gap:12px;">
+      <form id="userLoginForm">
+        <strong>Log in</strong>
+        <label for="userLoginEmail">Email</label>
+        <input id="userLoginEmail" type="email" required placeholder="you@example.com" autocomplete="email">
+        <label for="userLoginPass">Password</label>
+        <input id="userLoginPass" type="password" required placeholder="Password" autocomplete="current-password">
+        <div class="form-actions">
+          <button class="primary-btn" type="submit">Log in</button>
+        </div>
+        <p class="hint">No internet needed. This is a local demo login.</p>
+      </form>
+
+      <form id="userSignupForm">
+        <strong>Sign up</strong>
+        <label for="userName">Full name</label>
+        <input id="userName" required placeholder="Your name" autocomplete="name">
+        <label for="userEmail">Email</label>
+        <input id="userEmail" type="email" required placeholder="you@example.com" autocomplete="email">
+        <label for="userPass">Password</label>
+        <input id="userPass" type="password" required placeholder="Create a password" autocomplete="new-password">
+        <div class="form-actions">
+          <button class="ghost-btn" type="submit">Create account</button>
+        </div>
+        <p class="hint">Tip: use an easy password for exhibition demo.</p>
+      </form>
+    </div>
+
+    <div class="row-between" style="margin-top:12px;">
+      <div id="userStatus" class="muted">Not logged in.</div>
+      <button class="ghost-btn danger" id="logoutBtn" type="button">Logout</button>
+    </div>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
-let count=0,target=5000;
-let counter=document.getElementById("meals");
-let interval=setInterval(()=>{count+=20;counter.textContent=count;if(count>=target)clearInterval(interval);},20);
+const STORAGE = {
+  theme: "hopehands_theme",
+  donors: "hopehands_donors",
+  volunteers: "hopehands_volunteers",
+  raised: "hopehands_raised",
+  users: "hopehands_users",
+  currentUser: "hopehands_current_user",
+};
 
-function toggleDark(){document.body.classList.toggle("dark");}
+const ADMIN_PASSWORD = "admin123";
+const GOAL_POINTS = 12;
+const RUPEES_PER_POINT = 4500;
 
-function processDonation(e){
-  e.preventDefault();
-  let name=document.getElementById("donorName").value;
-  let amount=document.getElementById("donationAmount").value;
-  let msg=document.getElementById("donationMessage");
-  msg.innerText="Processing secure payment...";
-  setTimeout(()=>{
-    msg.innerText="✅ Donation Successful! Thank you!";
-    addDonor(name,amount);
-  },2000);
+const $ = (sel, root = document) => root.querySelector(sel);
+const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+function formatInt(n){ return new Intl.NumberFormat().format(n); }
+function readJSON(key, fallback){
+  try{
+    const v = localStorage.getItem(key);
+    return v ? JSON.parse(v) : fallback;
+  }catch{ return fallback; }
+}
+function writeJSON(key, value){
+  localStorage.setItem(key, JSON.stringify(value));
 }
 
-function addDonor(name,amount){
-  let li=document.createElement("li");
-  li.textContent=name+" donated ₹"+amount;
-  document.getElementById("donorList").appendChild(li);
+function toast(text){
+  const el = $("#toast");
+  el.textContent = text;
+  el.classList.add("show");
+  window.clearTimeout(toast._t);
+  toast._t = window.setTimeout(() => el.classList.remove("show"), 2400);
 }
 
-function showAdmin(){
-  let pass=prompt("Enter admin password:");
-  if(pass==="admin123"){
-    document.getElementById("adminPanel").style.display="block";
-  } else {
-    alert("Wrong password!");
+function setTheme(mode){
+  document.body.classList.toggle("dark", mode === "dark");
+  localStorage.setItem(STORAGE.theme, mode);
+  $("#themeBtn").textContent = mode === "dark" ? "☀️" : "🌙";
+}
+
+function toggleTheme(){
+  const isDark = document.body.classList.contains("dark");
+  setTheme(isDark ? "light" : "dark");
+}
+
+function getRaised(){
+  const raw = Number(localStorage.getItem(STORAGE.raised) || "0");
+  return Number.isFinite(raw) ? raw : 0;
+}
+function setRaised(val){
+  localStorage.setItem(STORAGE.raised, String(Math.max(0, Math.floor(val))));
+  renderProgress();
+}
+
+function renderProgress(){
+  const raised = getRaised();
+  const goal = GOAL_POINTS * RUPEES_PER_POINT;
+  const pct = goal <= 0 ? 0 : Math.min(100, Math.round((raised / goal) * 100));
+
+  $("#donationBar").style.width = `${pct}%`;
+  $("#goalBar").style.width = `${pct}%`;
+
+  const wells = Math.min(GOAL_POINTS, Math.floor(raised / RUPEES_PER_POINT));
+  $("#kpiWells").textContent = formatInt(wells);
+  $("#goalText").textContent = `Fund ${GOAL_POINTS} water points • Goal ₹${formatInt(goal)} • Raised ₹${formatInt(raised)} (${pct}%)`;
+}
+
+function seedKpis(){
+  const targetPeople = 5000;
+  const targetWells = 6;
+  const targetSchools = 18;
+
+  animateCount($("#kpiPeople"), 0, targetPeople, 900);
+  animateCount($("#kpiWells"), 0, targetWells, 700);
+  animateCount($("#kpiSchools"), 0, targetSchools, 800);
+}
+
+function animateCount(el, from, to, ms){
+  const start = performance.now();
+  const step = (t) => {
+    const p = Math.min(1, (t - start) / ms);
+    const eased = 1 - Math.pow(1 - p, 3);
+    const val = Math.round(from + (to - from) * eased);
+    el.textContent = formatInt(val);
+    if(p < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+function revealOnScroll(){
+  const items = $$(".reveal");
+  const io = new IntersectionObserver((entries) => {
+    for(const e of entries){
+      if(e.isIntersecting){
+        e.target.classList.add("show");
+        io.unobserve(e.target);
+      }
+    }
+  }, { threshold: 0.14 });
+  items.forEach((n) => io.observe(n));
+}
+
+function impactCounters(){
+  const root = $("#impact");
+  const io = new IntersectionObserver((entries) => {
+    for(const e of entries){
+      if(!e.isIntersecting) continue;
+      animateCount($("#peopleCounter"), 0, 5000, 1100);
+      animateCount($("#statHours"), 0, 320, 900);
+      animateCount($("#statKids"), 0, 1250, 1000);
+      animateCount($("#statVillages"), 0, 28, 800);
+      io.disconnect();
+    }
+  }, { threshold: 0.25 });
+  io.observe(root);
+}
+
+function addDonor(donor){
+  const donors = readJSON(STORAGE.donors, []);
+  donors.unshift(donor);
+  writeJSON(STORAGE.donors, donors.slice(0, 30));
+  renderAdmin();
+}
+
+function addVolunteer(vol){
+  const vols = readJSON(STORAGE.volunteers, []);
+  vols.unshift(vol);
+  writeJSON(STORAGE.volunteers, vols.slice(0, 30));
+  renderAdmin();
+}
+
+function renderAdmin(){
+  const donors = readJSON(STORAGE.donors, []);
+  const vols = readJSON(STORAGE.volunteers, []);
+
+  $("#donorCount").textContent = `${donors.length} donors`;
+  $("#volCount").textContent = `${vols.length} volunteers`;
+
+  const donorList = $("#donorList");
+  donorList.innerHTML = "";
+  for(const d of donors){
+    const li = document.createElement("li");
+    li.innerHTML = `<strong>${escapeHtml(d.name)}</strong> donated ₹${formatInt(d.amount)}<div class="muted" style="margin-top:4px; font-size:12px;">${escapeHtml(d.note || "No message")} • ${new Date(d.ts).toLocaleString()}</div>`;
+    donorList.appendChild(li);
+  }
+
+  const volList = $("#volList");
+  volList.innerHTML = "";
+  for(const v of vols){
+    const li = document.createElement("li");
+    li.style.listStyle = "none";
+    li.style.marginTop = "10px";
+    li.style.padding = "12px";
+    li.style.borderRadius = "14px";
+    li.style.border = "1px solid var(--border)";
+    li.style.background = "color-mix(in srgb, var(--surface) 92%, transparent)";
+    li.innerHTML = `<strong>${escapeHtml(v.name)}</strong><div class="muted" style="margin-top:4px; font-size:12px;">${escapeHtml(v.role)}${v.phone ? ` • ${escapeHtml(v.phone)}` : ""} • ${new Date(v.ts).toLocaleString()}</div>`;
+    volList.appendChild(li);
   }
 }
+
+function escapeHtml(str){
+  return String(str)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function simulatePayment({ name, email, amount, note }){
+  const msg = $("#donationMessage");
+  msg.classList.add("show");
+  msg.textContent = "Processing secure payment…";
+
+  window.setTimeout(() => {
+    msg.textContent = "Donation successful. Thank you for helping!";
+    toast("Donation recorded (demo).");
+
+    addDonor({ name, email, amount, note, ts: Date.now() });
+    setRaised(getRaised() + amount);
+  }, 1100);
+}
+
+function setupDonate(){
+  const form = $("#donateForm");
+  const quick = $("#quickDonate500");
+
+  quick.addEventListener("click", () => {
+    $("#donationAmount").value = "500";
+    toast("Filled ₹500.");
+    $("#donorName").focus();
+  });
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = $("#donorName").value.trim();
+    const email = $("#donorEmail").value.trim();
+    const amount = Number($("#donationAmount").value);
+    const note = $("#donationNote").value.trim();
+
+    if(!name || !email || !Number.isFinite(amount) || amount <= 0){
+      toast("Please fill name, email, and amount.");
+      return;
+    }
+    simulatePayment({ name, email, amount, note });
+    form.reset();
+  });
+
+  const modal = $("#donateModal");
+  const openBtn = $("#openDonate");
+  const closeBtn = $("#closeDonate");
+
+  openBtn.addEventListener("click", () => modal.showModal());
+  closeBtn.addEventListener("click", () => modal.close());
+  modal.addEventListener("click", (e) => {
+    const rect = modal.getBoundingClientRect();
+    const inDialog = rect.top <= e.clientY && e.clientY <= rect.bottom && rect.left <= e.clientX && e.clientX <= rect.right;
+    if(!inDialog) modal.close();
+  });
+
+  $$("#donateModal [data-amt]").forEach((b) => {
+    b.addEventListener("click", () => {
+      const amount = Number(b.getAttribute("data-amt"));
+      const name = ($("#donorName").value || "Guest").trim() || "Guest";
+      const email = ($("#donorEmail").value || "guest@example.com").trim() || "guest@example.com";
+      simulatePayment({ name, email, amount, note: "Fast donate" });
+      modal.close();
+    });
+  });
+}
+
+function setupVolunteer(){
+  const form = $("#volunteerForm");
+  const msg = $("#volMessage");
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = $("#volName").value.trim();
+    const phone = $("#volPhone").value.trim();
+    const role = $("#volRole").value.trim();
+    if(!name || !role){
+      toast("Please fill name and interest.");
+      return;
+    }
+    addVolunteer({ name, phone, role, ts: Date.now() });
+    msg.classList.add("show");
+    msg.textContent = "You’re signed up. Thanks for volunteering!";
+    toast("Volunteer recorded (demo).");
+    form.reset();
+    window.setTimeout(() => msg.classList.remove("show"), 2400);
+  });
+}
+
+function getUsers(){
+  return readJSON(STORAGE.users, []);
+}
+function setUsers(users){
+  writeJSON(STORAGE.users, users);
+}
+function getCurrentUser(){
+  return readJSON(STORAGE.currentUser, null);
+}
+function setCurrentUser(user){
+  writeJSON(STORAGE.currentUser, user);
+  renderUserUI();
+  autofillFromUser();
+}
+
+function initials(name){
+  const parts = String(name || "").trim().split(/\s+/).filter(Boolean);
+  if(parts.length === 0) return "U";
+  const a = parts[0]?.[0] || "U";
+  const b = parts.length > 1 ? (parts[parts.length - 1]?.[0] || "") : "";
+  return (a + b).toUpperCase();
+}
+
+function renderUserUI(){
+  const user = getCurrentUser();
+  const btn = $("#userBtn");
+  const status = $("#userStatus");
+  const logout = $("#logoutBtn");
+  if(!user){
+    btn.textContent = "Account";
+    status.textContent = "Not logged in.";
+    logout.style.display = "none";
+    return;
+  }
+  btn.innerHTML = `<span class="user-chip"><span class="avatar">${escapeHtml(initials(user.name))}</span> <span>${escapeHtml(user.name)}</span></span>`;
+  status.textContent = `Logged in as ${user.name} (${user.email})`;
+  logout.style.display = "inline-flex";
+}
+
+function autofillFromUser(){
+  const user = getCurrentUser();
+  if(!user) return;
+  if($("#donorName") && !$("#donorName").value) $("#donorName").value = user.name;
+  if($("#donorEmail") && !$("#donorEmail").value) $("#donorEmail").value = user.email;
+  if($("#volName") && !$("#volName").value) $("#volName").value = user.name;
+}
+
+function setupUserAuth(){
+  const modal = $("#userModal");
+  const open = () => {
+    modal.showModal();
+    renderUserUI();
+    autofillFromUser();
+  };
+  const close = () => modal.close();
+  $("#userBtn").addEventListener("click", open);
+  $("#closeUser").addEventListener("click", close);
+
+  modal.addEventListener("click", (e) => {
+    const rect = modal.getBoundingClientRect();
+    const inDialog = rect.top <= e.clientY && e.clientY <= rect.bottom && rect.left <= e.clientX && e.clientX <= rect.right;
+    if(!inDialog) modal.close();
+  });
+
+  $("#userSignupForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = $("#userName").value.trim();
+    const email = $("#userEmail").value.trim().toLowerCase();
+    const pass = $("#userPass").value;
+    if(!name || !email || !pass){ toast("Please fill all signup fields."); return; }
+    const users = getUsers();
+    if(users.some(u => u.email === email)){ toast("Account already exists. Log in instead."); return; }
+    users.push({ name, email, pass });
+    setUsers(users);
+    setCurrentUser({ name, email });
+    toast("Account created. You’re logged in.");
+    $("#userSignupForm").reset();
+  });
+
+  $("#userLoginForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = $("#userLoginEmail").value.trim().toLowerCase();
+    const pass = $("#userLoginPass").value;
+    const user = getUsers().find(u => u.email === email && u.pass === pass);
+    if(!user){ toast("Wrong email or password."); return; }
+    setCurrentUser({ name: user.name, email: user.email });
+    toast("Logged in.");
+    $("#userLoginForm").reset();
+  });
+
+  $("#logoutBtn").addEventListener("click", () => {
+    writeJSON(STORAGE.currentUser, null);
+    renderUserUI();
+    toast("Logged out.");
+  });
+}
+
+function setupAdmin(){
+  const AUTH_KEY = "hopehands_admin_unlocked";
+  const open = () => {
+    $("#adminPanel").style.display = "block";
+    toast("Admin unlocked.");
+    renderAdmin();
+    sessionStorage.setItem(AUTH_KEY, "1");
+  };
+  const unlock = (pass) => {
+    if(pass === ADMIN_PASSWORD) open();
+    else toast("Wrong password.");
+  };
+
+  const modal = $("#loginModal");
+  const loginForm = $("#loginForm");
+  const loginPass = $("#loginPass");
+  const openModal = () => {
+    loginForm.reset();
+    modal.showModal();
+    window.setTimeout(() => loginPass.focus(), 0);
+  };
+  const closeModal = () => modal.close();
+
+  $("#loginBtn").addEventListener("click", openModal);
+  $("#adminBtn").addEventListener("click", openModal);
+  $("#adminLink").addEventListener("click", (e) => { e.preventDefault(); openModal(); location.hash = "#admin"; });
+  $("#closeLogin").addEventListener("click", closeModal);
+  $("#loginCancel").addEventListener("click", closeModal);
+
+  modal.addEventListener("click", (e) => {
+    const rect = modal.getBoundingClientRect();
+    const inDialog = rect.top <= e.clientY && e.clientY <= rect.bottom && rect.left <= e.clientX && e.clientX <= rect.right;
+    if(!inDialog) modal.close();
+  });
+
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const pass = loginPass.value;
+    unlock(pass);
+    modal.close();
+  });
+
+  if(sessionStorage.getItem(AUTH_KEY) === "1"){
+    open();
+  }
+
+  $("#resetBtn").addEventListener("click", () => {
+    const ok = confirm("Reset donors, volunteers, and progress on this device?");
+    if(!ok) return;
+    localStorage.removeItem(STORAGE.donors);
+    localStorage.removeItem(STORAGE.volunteers);
+    localStorage.removeItem(STORAGE.raised);
+    renderProgress();
+    renderAdmin();
+    toast("Demo data reset.");
+  });
+}
+
+function setupNav(){
+  const menuBtn = $("#menuBtn");
+  const nav = $("#siteNav");
+  const closeMenu = () => {
+    nav.classList.remove("open");
+    menuBtn.setAttribute("aria-expanded", "false");
+    menuBtn.setAttribute("aria-label", "Open menu");
+  };
+  const openMenu = () => {
+    nav.classList.add("open");
+    menuBtn.setAttribute("aria-expanded", "true");
+    menuBtn.setAttribute("aria-label", "Close menu");
+  };
+
+  menuBtn.addEventListener("click", () => {
+    const isOpen = nav.classList.contains("open");
+    isOpen ? closeMenu() : openMenu();
+  });
+  $$("#siteNav a").forEach((a) => a.addEventListener("click", closeMenu));
+  window.addEventListener("resize", () => { if(window.innerWidth > 860) closeMenu(); });
+}
+
+function init(){
+  const saved = localStorage.getItem(STORAGE.theme);
+  const preferDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  setTheme(saved || (preferDark ? "dark" : "light"));
+
+  $("#themeBtn").addEventListener("click", toggleTheme);
+  setupNav();
+  revealOnScroll();
+  impactCounters();
+  setupDonate();
+  setupVolunteer();
+  setupUserAuth();
+  setupAdmin();
+
+  seedKpis();
+  renderProgress();
+  renderUserUI();
+  autofillFromUser();
+}
+
+init();
 </script>
 
 </body>
