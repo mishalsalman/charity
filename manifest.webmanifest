@@ -1,0 +1,16 @@
+{
+  "name": "The Elite Global Humanity Foundation",
+  "short_name": "Elite Humanity",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f6fbfb",
+  "theme_color": "#2c7a7b",
+  "icons": [
+    {
+      "src": "assets/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+
