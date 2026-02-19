@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Elite Global Humanity Foundation | Built on Trust</title>
+<title>The Elite Global Humanity Foundation</title>
 <meta name="description" content="The Elite Global Humanity Foundation delivers transparent global impact through clean water, health, and education. Donate, volunteer, and track impact.">
 <meta name="theme-color" content="#2c7a7b">
 <meta property="og:title" content="The Elite Global Humanity Foundation">
@@ -19,7 +19,6 @@
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "The Elite Global Humanity Foundation",
-  "slogan": "Built on Trust",
   "logo": "assets/icon.svg"
 }
 </script>
@@ -72,6 +71,47 @@ body{
     linear-gradient(180deg, var(--bg), var(--bg-2));
   color:var(--text);
   transition: background 220ms ease, color 220ms ease;
+  opacity:0;
+  animation: pageFadeIn 600ms ease forwards;
+}
+@keyframes pageFadeIn{
+  from{ opacity:0; transform: translateY(8px); }
+  to{ opacity:1; transform: translateY(0); }
+}
+
+.page-loader{
+  position: fixed;
+  inset:0;
+  background: var(--bg);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  transition: opacity 400ms ease, visibility 400ms ease;
+}
+.page-loader.hidden{
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.loader-spinner{
+  width: 48px;
+  height: 48px;
+  border: 3px solid color-mix(in srgb, var(--primary) 20%, transparent);
+  border-top-color: var(--primary);
+  border-radius: 999px;
+  animation: spin 800ms linear infinite;
+}
+@keyframes spin{
+  to{ transform: rotate(360deg); }
+}
+.loader-text{
+  font-weight: 900;
+  font-size: 14px;
+  color: var(--muted);
+  letter-spacing: 0.3px;
 }
 a{ color:inherit; }
 img{ max-width:100%; display:block; }
@@ -112,8 +152,17 @@ header{
   letter-spacing:0.6px;
 }
 .brand .name{ line-height:1.1; }
-.brand .name strong{ display:block; font-size:15px; letter-spacing:0.2px; }
-.brand .name span{ display:block; font-size:12px; color:var(--muted); }
+.brand .name strong{
+  display:block;
+  font-size: clamp(16px, 1.8vw, 20px);
+  letter-spacing:-0.01em;
+  font-weight:1000;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.brand .name span{ display:none; }
 
 nav{ display:flex; gap:10px; align-items:center; }
 nav a{
@@ -542,9 +591,12 @@ footer{
 
 @media (prefers-reduced-motion: reduce){
   *{ scroll-behavior:auto !important; }
+  body{ animation:none; opacity:1; }
   .reveal{ transition:none; transform:none; opacity:1; }
   .card{ transition:none; }
   .progress > div{ transition:none; }
+  .loader-spinner{ animation:none; }
+  .page-loader{ transition:none; }
 }
 
 dialog{
@@ -757,6 +809,11 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
 
 <body>
 
+<div class="page-loader" id="pageLoader">
+  <div class="loader-spinner" aria-hidden="true"></div>
+  <div class="loader-text">The Elite Global Humanity Foundation</div>
+</div>
+
 <a class="skip-link" href="#main">Skip to content</a>
 
 <header>
@@ -765,7 +822,6 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
       <div class="brand-mark" aria-hidden="true">EG</div>
       <div class="name">
         <strong>The Elite Global Humanity Foundation</strong>
-        <span>Built on trust • Transparent global impact</span>
       </div>
     </a>
 
@@ -799,7 +855,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
   <section class="hero" id="top">
     <div class="container hero-grid">
       <div class="reveal show">
-        <div class="eyebrow">Built on trust • Transparent global impact</div>
+        <div class="eyebrow">Making a difference, one community at a time</div>
         <h1>Delivering transparent global impact.</h1>
         <p>
           The Elite Global Humanity Foundation is committed to clean water, health, and education—because sustainable change starts with basics done well.
@@ -809,7 +865,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
           <a class="ghost-btn" href="#volunteer">Volunteer</a>
           <a class="ghost-btn" href="#impact">See impact</a>
         </div>
-        <p class="hint">Built on trust. Driven by impact. Focused on people.</p>
+        <p class="hint">Join us in creating lasting change.</p>
       </div>
 
       <aside class="hero-card reveal show" aria-label="Impact snapshot">
@@ -1297,7 +1353,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
     <div class="container footer-grid">
       <div>
         <strong>The Elite Global Humanity Foundation</strong>
-        <div class="muted" style="margin-top:6px;">© 2026 • Built on Trust</div>
+        <div class="muted" style="margin-top:6px;">© 2026</div>
         <div class="muted" style="margin-top:8px; font-size:13px;">
           © 2026 The Elite Global Humanity Foundation. All rights reserved.
         </div>
@@ -2395,6 +2451,22 @@ function init(){
   window.renderMyReceipts = renderMyReceipts;
 
   setupSmartHelp();
+
+  // Hide page loader after everything is ready
+  const loader = $("#pageLoader");
+  if(loader){
+    const hideLoader = () => {
+      setTimeout(() => {
+        loader.classList.add("hidden");
+        setTimeout(() => loader.remove(), 400);
+      }, 300);
+    };
+    if(document.readyState === "complete"){
+      hideLoader();
+    }else{
+      window.addEventListener("load", hideLoader);
+    }
+  }
 }
 
 init();
