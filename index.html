@@ -26,29 +26,39 @@
 
 <style>
 :root{
-  --primary: #0ea5e9;      /* sky-500 */
-  --primary-2: #0284c7;    /* sky-600 */
-  --accent: #22c55e;       /* green-500 */
-  --accent-2: #16a34a;     /* green-600 */
-  --bg: #f7fbff;
+  --primary: #6366f1;      /* indigo-500 */
+  --primary-2: #4f46e5;    /* indigo-600 */
+  --accent: #10b981;       /* emerald-500 */
+  --accent-2: #059669;     /* emerald-600 */
+
+  --bg: #f8fafc;           /* slate-50 */
+  --bg-2: #f1f5f9;         /* slate-100 */
   --surface: #ffffff;
+  --surface-2: rgba(255,255,255,0.72);
+
   --text: #0b1220;
   --muted: #475569;
   --border: rgba(15, 23, 42, 0.12);
-  --shadow: 0 18px 50px rgba(2, 8, 23, 0.14);
-  --ring: rgba(14, 165, 233, 0.26);
-  --radius: 16px;
+
+  --shadow: 0 14px 42px rgba(2, 8, 23, 0.12);
+  --shadow-2: 0 10px 22px rgba(2, 8, 23, 0.10);
+  --ring: rgba(99, 102, 241, 0.26);
+
+  --radius: 18px;
   --radius-sm: 12px;
   --max: 1120px;
 }
 body.dark{
-  --bg:#070b16;
+  --bg:#070a13;
+  --bg-2:#0b1220;
   --surface:#0b1220;
+  --surface-2: rgba(11,18,32,0.72);
   --text:#eef2ff;
   --muted:#b8c2d8;
   --border: rgba(226, 232, 240, 0.14);
   --shadow: 0 22px 64px rgba(0,0,0,0.55);
-  --ring: rgba(34, 197, 94, 0.22);
+  --shadow-2: 0 14px 34px rgba(0,0,0,0.45);
+  --ring: rgba(16, 185, 129, 0.22);
 }
 
 *{ box-sizing:border-box; }
@@ -56,9 +66,10 @@ html{ scroll-behavior:smooth; }
 body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
-  background: radial-gradient(900px 520px at 10% 0%, rgba(14,165,233,0.16), transparent 55%),
-              radial-gradient(720px 480px at 90% 10%, rgba(34,197,94,0.14), transparent 60%),
-              var(--bg);
+  background:
+    radial-gradient(820px 520px at 10% 0%, rgba(99,102,241,0.18), transparent 55%),
+    radial-gradient(760px 520px at 90% 10%, rgba(16,185,129,0.16), transparent 60%),
+    linear-gradient(180deg, var(--bg), var(--bg-2));
   color:var(--text);
   transition: background 220ms ease, color 220ms ease;
 }
@@ -78,7 +89,7 @@ button, input, select, textarea{ font:inherit; }
 header{
   position:sticky; top:0; z-index:50;
   backdrop-filter: blur(10px);
-  background: color-mix(in srgb, var(--surface) 84%, transparent);
+  background: color-mix(in srgb, var(--surface-2) 86%, transparent);
   border-bottom:1px solid var(--border);
 }
 .header-inner{
@@ -92,7 +103,7 @@ header{
   width:44px; height:44px;
   border-radius:14px;
   background: linear-gradient(135deg, var(--accent), var(--primary));
-  box-shadow: 0 12px 28px rgba(2,8,23,0.18);
+  box-shadow: var(--shadow-2);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -122,7 +133,7 @@ nav a[aria-current="page"]{ color:var(--text); background: color-mix(in srgb, va
   height:40px; padding:0 12px;
   border-radius:999px;
   border:1px solid var(--border);
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  background: color-mix(in srgb, var(--surface-2) 92%, transparent);
   font-weight:900;
   color: var(--muted);
   font-size:12px;
@@ -135,7 +146,7 @@ nav a[aria-current="page"]{ color:var(--text); background: color-mix(in srgb, va
   height:40px; padding:0 12px;
   border-radius:999px;
   border:1px solid var(--border);
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  background: color-mix(in srgb, var(--surface-2) 92%, transparent);
   font-weight:900;
 }
 .avatar{
@@ -152,9 +163,11 @@ nav a[aria-current="page"]{ color:var(--text); background: color-mix(in srgb, va
   height:40px; width:40px;
   border-radius:999px;
   border:1px solid var(--border);
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  background: color-mix(in srgb, var(--surface-2) 92%, transparent);
   cursor:pointer;
+  transition: transform 160ms ease, background 160ms ease;
 }
+.icon-btn:active{ transform: translateY(1px); }
 .icon-btn:focus-visible{ outline:3px solid var(--ring); outline-offset:2px; }
 .primary-btn{
   display:inline-flex; align-items:center; justify-content:center;
@@ -162,21 +175,26 @@ nav a[aria-current="page"]{ color:var(--text); background: color-mix(in srgb, va
   height:40px;
   padding:0 14px;
   border-radius:999px;
-  border:1px solid color-mix(in srgb, var(--accent) 30%, var(--border));
-  background: linear-gradient(135deg, var(--accent), var(--primary));
+  border:1px solid color-mix(in srgb, var(--primary) 26%, var(--border));
+  background: linear-gradient(135deg, var(--primary), var(--accent));
   color:white;
   cursor:pointer;
   font-weight:800;
   text-decoration:none;
-  box-shadow: 0 10px 22px rgba(44,122,123,0.25);
+  box-shadow: var(--shadow-2);
 }
 .primary-btn:hover{ filter:saturate(1.05) brightness(1.02); }
+.primary-btn:active{ transform: translateY(1px); }
 .primary-btn:focus-visible{ outline:3px solid var(--ring); outline-offset:2px; }
 
 .mobile-toggle{ display:none; }
 
 main{ padding-bottom: 40px; }
-section{ padding:72px 0; }
+section{
+  padding:76px 0;
+  content-visibility: auto;
+  contain-intrinsic-size: 820px;
+}
 .section-title{ font-size: clamp(22px, 2.1vw, 30px); margin:0 0 10px; letter-spacing:-0.02em; }
 .section-sub{ margin:0 auto 24px; max-width:70ch; color:var(--muted); }
 
@@ -195,7 +213,7 @@ section{ padding:72px 0; }
   gap:10px;
   padding:8px 12px;
   border:1px solid var(--border);
-  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  background: color-mix(in srgb, var(--surface-2) 90%, transparent);
   border-radius:999px;
   color:var(--muted);
   font-weight:700;
@@ -219,15 +237,17 @@ section{ padding:72px 0; }
   height:40px; padding:0 14px;
   border-radius:999px;
   border:1px solid var(--border);
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  background: color-mix(in srgb, var(--surface-2) 92%, transparent);
   cursor:pointer;
   font-weight:800;
   text-decoration:none;
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
 }
 .ghost-btn:hover{ background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.ghost-btn:active{ transform: translateY(1px); }
 .hero-card{
   border:1px solid var(--border);
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  background: color-mix(in srgb, var(--surface-2) 92%, transparent);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   overflow:hidden;
@@ -267,16 +287,16 @@ section{ padding:72px 0; }
 .card{
   text-align:left;
   border:1px solid var(--border);
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  background: color-mix(in srgb, var(--surface-2) 92%, transparent);
   border-radius: var(--radius);
   padding:16px;
-  box-shadow: 0 12px 24px rgba(2,8,23,0.08);
+  box-shadow: var(--shadow-2);
   transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
 }
 .card:hover{
   transform: translateY(-2px);
-  box-shadow: 0 18px 40px rgba(2,8,23,0.12);
-  border-color: color-mix(in srgb, var(--primary) 24%, var(--border));
+  box-shadow: var(--shadow);
+  border-color: color-mix(in srgb, var(--primary) 28%, var(--border));
 }
 .card h3{ margin:0 0 6px; font-size:16px; letter-spacing:-0.01em; }
 .card p{ margin:0; color:var(--muted); font-size:14px; line-height:1.5; }
@@ -334,7 +354,7 @@ section{ padding:72px 0; }
   align-items:center;
   gap:10px;
   padding:8px 0;
-  border-bottom:1px solid color-mix(in srgb, var(--border) 60%, transparent);
+  border-bottom:1px solid color-mix(in srgb, var(--border) 70%, transparent);
   font-size:13px;
 }
 .leader-item:last-child{ border-bottom:none; }
@@ -354,10 +374,10 @@ section{ padding:72px 0; }
 }
 form{
   border:1px solid var(--border);
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  background: color-mix(in srgb, var(--surface-2) 92%, transparent);
   border-radius: var(--radius);
   padding:16px;
-  box-shadow: 0 12px 24px rgba(2,8,23,0.10);
+  box-shadow: var(--shadow-2);
 }
 label{ display:block; font-weight:800; font-size:12px; color:var(--muted); margin-top:12px; }
 input, select, textarea{
@@ -366,7 +386,7 @@ input, select, textarea{
   margin-top:6px;
   border-radius:12px;
   border:1px solid var(--border);
-  background: color-mix(in srgb, var(--surface) 96%, transparent);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
   color: var(--text);
 }
 input:focus, select:focus, textarea:focus{ outline:3px solid var(--ring); border-color: transparent; }
@@ -380,7 +400,7 @@ input:focus, select:focus, textarea:focus{ outline:3px solid var(--ring); border
   margin-top:10px;
   border:1px solid var(--border);
   border-radius: 14px;
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  background: color-mix(in srgb, var(--surface-2) 92%, transparent);
   padding:12px;
 }
 .pay-tabs{
@@ -553,7 +573,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
   padding: 12px 14px;
   border-radius: 14px;
   border:1px solid var(--border);
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  background: color-mix(in srgb, var(--surface-2) 92%, transparent);
   box-shadow: var(--shadow);
   color: var(--text);
   display:none;
@@ -581,6 +601,114 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
   opacity: 1;
 }
 .live-feed strong{ display:block; }
+
+.ai-fab{
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  height: 52px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: var(--shadow);
+  font-weight: 1000;
+  letter-spacing: 0.2px;
+  transition: transform 180ms ease, filter 180ms ease;
+  z-index: 80;
+}
+.ai-fab:hover{ filter: saturate(1.05) brightness(1.02); }
+.ai-fab:active{ transform: translateY(1px); }
+.ai-fab:focus-visible{ outline:3px solid var(--ring); outline-offset:2px; }
+.ai-fab .dot{
+  height:10px; width:10px; border-radius:999px;
+  background: rgba(255,255,255,0.9);
+  box-shadow: 0 0 0 6px rgba(255,255,255,0.12);
+}
+
+.ai-panel{
+  position: fixed;
+  right: 14px;
+  bottom: 74px;
+  width: min(380px, calc(100% - 28px));
+  max-height: min(560px, calc(100vh - 140px));
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface-2) 92%, transparent);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: none;
+  z-index: 80;
+}
+.ai-panel.open{ display:block; }
+.ai-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 12px;
+  border-bottom:1px solid var(--border);
+}
+.ai-head strong{ display:flex; align-items:center; gap:10px; }
+.ai-head .tag{
+  font-size:11px;
+  font-weight:900;
+  color: color-mix(in srgb, var(--text) 72%, var(--primary));
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--surface-2) 92%, transparent);
+  padding:5px 8px;
+  border-radius:999px;
+}
+.ai-body{ padding:12px; display:grid; gap:10px; }
+.ai-msgs{
+  display:grid;
+  gap:10px;
+  overflow:auto;
+  padding-right:4px;
+  max-height: 320px;
+}
+.ai-bubble{
+  padding:10px 12px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface-2) 94%, transparent);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.ai-bubble.user{
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  border-color: color-mix(in srgb, var(--primary) 26%, var(--border));
+}
+.ai-actions{ display:flex; flex-wrap:wrap; gap:8px; }
+.ai-chip{
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--surface-2) 94%, transparent);
+  border-radius:999px;
+  padding:8px 10px;
+  font-weight:900;
+  cursor:pointer;
+  font-size:12px;
+}
+.ai-chip:hover{ background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.ai-input{
+  display:flex; gap:8px; align-items:center;
+  border-top:1px solid var(--border);
+  padding:10px;
+}
+.ai-input input{ margin:0; }
+.ai-send{
+  height:42px;
+  padding:0 12px;
+  border-radius: 12px;
+  border:1px solid color-mix(in srgb, var(--primary) 26%, var(--border));
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color:white;
+  font-weight:1000;
+  cursor:pointer;
+}
+.ai-send:active{ transform: translateY(1px); }
 
 .backtop{
   position: fixed;
@@ -801,7 +929,7 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
           </div>
 
           <label for="donorName">Your name</label>
-          <input type="text" id="donorName" placeholder="e.g., Mishal" required autocomplete="name">
+          <input type="text" id="donorName" placeholder="Full name" required autocomplete="name">
 
           <div class="form-row">
             <div>
@@ -1273,6 +1401,24 @@ dialog::backdrop{ background: rgba(2,8,23,0.55); }
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="live-feed" id="liveFeed" aria-live="polite"></div>
+<div class="ai-panel" id="aiPanel" aria-label="Smart Help">
+  <div class="ai-head">
+    <strong>Smart Help <span class="tag">Offline</span></strong>
+    <button class="icon-btn" id="aiClose" type="button" aria-label="Close help">✕</button>
+  </div>
+  <div class="ai-body">
+    <div class="ai-msgs" id="aiMsgs" aria-live="polite"></div>
+    <div class="ai-actions" id="aiActions" aria-label="Quick actions"></div>
+  </div>
+  <div class="ai-input">
+    <input id="aiInput" placeholder="Ask anything…" aria-label="Ask Smart Help">
+    <button class="ai-send" id="aiSend" type="button">Send</button>
+  </div>
+</div>
+<button class="ai-fab" id="aiFab" type="button" aria-label="Open Smart Help">
+  <span class="dot" aria-hidden="true"></span>
+  Help
+</button>
 
 <script>
 const STORAGE = {
@@ -1437,7 +1583,7 @@ function renderAdmin(){
     li.style.padding = "12px";
     li.style.borderRadius = "14px";
     li.style.border = "1px solid var(--border)";
-    li.style.background = "color-mix(in srgb, var(--surface) 92%, transparent)";
+  li.style.background = "color-mix(in srgb, var(--surface-2) 92%, transparent)";
     li.innerHTML = `<strong>${escapeHtml(v.name)}</strong><div class="muted" style="margin-top:4px; font-size:12px;">${escapeHtml(v.role)}${v.phone ? ` • ${escapeHtml(v.phone)}` : ""} • ${new Date(v.ts).toLocaleString()}</div>`;
     volList.appendChild(li);
   }
@@ -2247,9 +2393,138 @@ function init(){
 
   renderAchievements();
   window.renderMyReceipts = renderMyReceipts;
+
+  setupSmartHelp();
 }
 
 init();
+
+function setupSmartHelp(){
+  const panel = $("#aiPanel");
+  const fab = $("#aiFab");
+  const close = $("#aiClose");
+  const msgs = $("#aiMsgs");
+  const actions = $("#aiActions");
+  const input = $("#aiInput");
+  const send = $("#aiSend");
+
+  if(!panel || !fab || !close || !msgs || !actions || !input || !send) return;
+
+  const quick = [
+    { id:"donate", label:"Donate help", text:"How do I donate?", intent:"donate" },
+    { id:"upi", label:"UPI QR", text:"Show UPI payment steps", intent:"upi" },
+    { id:"receipt", label:"Receipt", text:"How do I download receipt?", intent:"receipt" },
+    { id:"vol", label:"Volunteer", text:"How do I volunteer?", intent:"volunteer" },
+    { id:"care", label:"Customer care", text:"Customer care number", intent:"care" },
+  ];
+
+  function addBubble(text, who="bot"){
+    const div = document.createElement("div");
+    div.className = `ai-bubble ${who === "user" ? "user" : ""}`.trim();
+    div.innerHTML = text;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function setQuickActions(){
+    actions.innerHTML = "";
+    quick.forEach((q) => {
+      const b = document.createElement("button");
+      b.className = "ai-chip";
+      b.type = "button";
+      b.textContent = q.label;
+      b.addEventListener("click", () => handle(q.text));
+      actions.appendChild(b);
+    });
+  }
+
+  function open(){
+    panel.classList.add("open");
+    if(!msgs.childElementCount){
+      addBubble(
+        `Hi! I’m Smart Help. I can guide you to donate, volunteer, download receipts, or contact support.<br><span class="muted" style="font-size:12px;">Tip: try “UPI”, “card”, “receipt”, “custom amount”.</span>`
+      );
+      setQuickActions();
+    }
+    setTimeout(() => input.focus(), 0);
+  }
+  function closePanel(){ panel.classList.remove("open"); }
+
+  function go(hash){
+    closePanel();
+    location.hash = hash;
+    const el = document.querySelector(hash);
+    if(el) el.scrollIntoView({ behavior: "smooth", block:"start" });
+  }
+
+  function replyFor(intent){
+    if(intent === "donate"){
+      return `To donate: open the <strong>Donate</strong> section, enter your details, choose <strong>UPI</strong> or <strong>Card</strong>, then click <strong>Proceed to payment</strong>.<br><button class="ai-chip" onclick="location.hash='#donate'">Go to Donate</button>`;
+    }
+    if(intent === "upi"){
+      return `UPI payment: you can scan the QR or copy the UPI ID <strong>${escapeHtml(UPI_ID)}</strong>. After payment, your donation is recorded and you can download a receipt.`;
+    }
+    if(intent === "receipt"){
+      return `After a successful donation, click <strong>Download receipt (PDF)</strong>. If you’re logged in, open <strong>Account → My receipts</strong> to view older receipts.`;
+    }
+    if(intent === "volunteer"){
+      return `To volunteer: go to the <strong>Volunteer</strong> section, choose your interest, and submit the form.<br><button class="ai-chip" onclick="location.hash='#volunteer'">Go to Volunteer</button>`;
+    }
+    if(intent === "care"){
+      return `Customer care: <strong>${escapeHtml(SUPPORT_PHONE)}</strong><br>You can also email: <strong>contact@elitehumanity.org</strong>.`;
+    }
+    return null;
+  }
+
+  function detectIntent(t){
+    const s = t.toLowerCase();
+    if(s.includes("donat") || s.includes("payment") || s.includes("pay")) return "donate";
+    if(s.includes("upi") || s.includes("qr") || s.includes("scan")) return "upi";
+    if(s.includes("receipt") || s.includes("reciept") || s.includes("pdf")) return "receipt";
+    if(s.includes("volun")) return "volunteer";
+    if(s.includes("help") || s.includes("support") || s.includes("care") || s.includes("call")) return "care";
+    if(s.includes("admin")) return "admin";
+    return "unknown";
+  }
+
+  function handle(text){
+    const q = (text || "").trim();
+    if(!q) return;
+    addBubble(escapeHtml(q), "user");
+    input.value = "";
+
+    const intent = detectIntent(q);
+    if(intent === "admin"){
+      addBubble(`Admin access is in the top bar under <strong>Admin</strong>. Use the password to unlock the dashboard.`);
+      return;
+    }
+    const r = replyFor(intent);
+    if(r){
+      addBubble(r);
+      return;
+    }
+
+    // Lightweight offline Q&A / routing
+    addBubble(
+      `I can help with donations, UPI/card payments, receipts, volunteering, or customer care.<br>
+      Try one of these:<div class="ai-actions" style="margin-top:8px;">
+      <button class="ai-chip" type="button" onclick="location.hash='#donate'">Donate</button>
+      <button class="ai-chip" type="button" onclick="location.hash='#volunteer'">Volunteer</button>
+      <button class="ai-chip" type="button" onclick="location.hash='#contact'">Contact</button>
+      </div>`
+    );
+  }
+
+  fab.addEventListener("click", open);
+  close.addEventListener("click", closePanel);
+  document.addEventListener("keydown", (e) => {
+    if(e.key === "Escape") closePanel();
+  });
+  send.addEventListener("click", () => handle(input.value));
+  input.addEventListener("keydown", (e) => {
+    if(e.key === "Enter") handle(input.value);
+  });
+}
 </script>
 
 </body>
